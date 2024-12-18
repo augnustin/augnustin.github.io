@@ -1,0 +1,17 @@
+{
+  "name": "resume",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "sass": "sass --watch ./css/style.css.scss ./css/style.css"
+  },
+  "author": "Augustin Riedinger",
+  "license": "ISC",
+  "description": "Augustin Riedinger online resume",
+  "dependencies": {
+    "sass": "^1.83.0"
+  }
+}

@@ -1,9 +1,14 @@
+@use "sass:color";
+
 $text-color: rgb(64, 61, 58);
-$theme-blue: rgb(33,88,104);
-$link-blue: rgb(75,172,198);
+$theme-blue: rgb(33, 88, 104);
+$lighter-theme-blue: color.adjust($theme-blue, $lightness: 2%);
+$link-blue: #3795ae;
+$radius: 0.5rem;
+$box-shaddow: 0 0 10px #ccc;
 
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   background-color: black;
   padding: 0;
   margin: 0;
@@ -12,7 +17,7 @@ body {
 
 #page {
   margin: 0;
-  width: 20cm;
+  width: 21cm;
   height: 27.9cm;
   background-color: white;
   color: $text-color;
@@ -20,7 +25,7 @@ body {
   left: 50%;
   margin-left: -10.5cm;
   text-align: justify;
-  padding: 0.2cm 0.5cm;
+  padding: 1rem;
 }
 
 #content {
@@ -36,68 +41,75 @@ a {
   text-align: left;
 }
 
-#name {
-  font-size: 24pt;
-  font-weight: 700;
-  color: $theme-blue;
-  float: left;
-  margin: 28px 35px 28px 20px;
+header {
+  display: flex;
+  flex-direction: horizontal;
+  justify-content: space-between;
+  #name {
+    font-size: 24pt;
+    font-weight: 700;
+    color: $theme-blue;
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+  }
+
+  #details {
+    display: flex;
+    align-items: center;
+    font-size: 10pt;
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      li {
+        padding: 2px;
+        padding-left: 25px;
+        background-repeat: no-repeat;
+        background-position: 0% 50%;
+        line-height: 16px;
+      }
+    }
+  }
+
+  #photo {
+    img {
+      height: 3cm;
+      border-radius: $radius;
+      box-shadow: $box-shaddow;
+    }
+  }
 }
 
-#details {
-  font-size: 8pt;
-  float: left;
-  padding: 5px;
-  margin: 0 1cm;
-  list-style: none;
-  li {
-    padding: 2px;
-    padding-left: 25px;
-    background-repeat: no-repeat;
-    background-position: 0% 50%;
-    line-height: 16px;
-  }
+#phone,
+#address,
+#mail,
+#info,
+#website {
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
 }
 
 #phone {
   background-image: url(../img/phone_2.png);
-  -webkit-print-color-adjust:exact;
-
 }
 
 #address {
   background-image: url(../img/home.png);
-  -webkit-print-color-adjust:exact;
 }
 
 #mail {
   background-image: url(../img/mail.png);
-  -webkit-print-color-adjust:exact;
-
 }
 
 #info {
   background-image: url(../img/user_silhouette.png);
-  -webkit-print-color-adjust:exact;
 }
 
 #website {
   background-image: url(../img/url.png);
-  -webkit-print-color-adjust:exact; 
 }
-
-#photo {
-  position: absolute;
-  top: 0.45cm;
-  right: 0.5cm;
-  img {
-    width: 2cm;
-    height: 2.5cm;
-    border-radius: 5px;
-    margin-right: 8px;
-  }
-}
-
 
 #title {
   width: 100%;
@@ -126,11 +138,10 @@ a {
     padding-top: 18px;
     font-variant: small-caps;
     margin-bottom: 0px;
-    -webkit-print-color-adjust:exact;
-    margin-right: 7px;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
   }
 }
-
 
 .left-col {
   float: left;
@@ -139,34 +150,33 @@ a {
 }
 
 .right-col {
-  width: 62%;
+  width: 59%;
   float: right;
 }
 
 section {
-  border: thin dotted $theme-blue;
-  margin: 0.2cm;
-  margin-top: 0.5cm;
+  margin-bottom: 1rem;
   position: relative;
-  padding-right: 12px;
+  padding: 0.5rem;
   font-size: 0.9em;
   float: left;
+  border-radius: $radius;
+  box-shadow: $box-shaddow;
   h2 {
     color: white;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    margin: -15px -17px 0px -5px;
-    padding: 5px;
+    margin: -0.5rem;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem 0.75rem;
     font-size: 12pt;
     font-variant: small-caps;
     font-weight: normal;
+    border-top-left-radius: $radius;
+    border-top-right-radius: $radius;
+    border: none;
     background-color: $theme-blue;
-    background: -moz-linear-gradient(left,  $theme-blue 0%, $theme-blue 1%, lighten($theme-blue, 2%) 25%, rgba(255,255,255,0) 99%);
-    background: -webkit-linear-gradient(left,  $theme-blue 0%,$theme-blue 1%,lighten($theme-blue, 2%) 25%,rgba(255,255,255,0) 99%);
-    background: -o-linear-gradient(left,  $theme-blue 0%,$theme-blue 1%,lighten($theme-blue, 2%) 25%,rgba(255,255,255,0) 99%);
-    background: -ms-linear-gradient(left,  $theme-blue 0%,$theme-blue 1%,lighten($theme-blue, 2%) 25%,rgba(255,255,255,0) 99%);
-    background: linear-gradient(to right,  $theme-blue 0%,$theme-blue 1%,lighten($theme-blue, 2%) 25%,rgba(255,255,255,0) 99%);
-    -webkit-print-color-adjust:exact;
+    background: linear-gradient(to right, $theme-blue 0%, $theme-blue 1%, $lighter-theme-blue 25%, white 95%);
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
   }
   h3 {
     font-size: 12pt;
@@ -189,22 +199,19 @@ section {
       background-color: $text-color;
       color: white;
       padding: 0px 5px 1px 6px;
+      print-color-adjust: exact;
       -webkit-print-color-adjust: exact;
     }
   }
 
-  p {
-    font-size: 8pt;
-    margin: 5px 0;
-  }
-
-
-
+  // p {
+  // font-size: 8pt;
+  // }
 
   &#working_experience {
-    width: 96%;
+    width: 100%;
+    box-sizing: border-box;
     ul.timeline {
-      height: 300px;
       margin-top: -5px;
       margin-bottom: 45px;
       padding-left: 0;
@@ -226,10 +233,10 @@ section {
           font-style: italic;
           transform: rotate(20deg);
           margin: 0 5px 0 0;
-          position: relative;
           width: 90px;
           position: absolute;
-          right: -2px;
+          right: 100%;
+          margin-right: 3px;
           &:after {
             content: "";
             width: 9px;
@@ -241,35 +248,44 @@ section {
             top: 8px;
           }
         }
+        &:not(.dot) {
+          display: flex;
+          top: 30px;
+          align-items: center;
+        }
         .work {
-          position: absolute;
-          left: 100%;
           width: 180px;
-          top: 60px;
-          bottom: 0;
-          margin: auto;
-          display: table;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           h3 {
             text-align: center;
             margin: 0 15px;
           }
-          p.description {
-            position: absolute;
-            left: 100%;
-            top: 0;
+          small {
+            font-size: 0.65em;
+          }
+        }
+        .description {
+          flex: 1;
+          margin-right: 1rem;
+          border-left: 4px solid $lighter-theme-blue;
+          padding-left: 0.5rem;
+          p {
+            font-size: 9pt;
             margin: 0;
-            width: 430px;
-            font-size: 10pt;
+            &:not(:last-child) {
+              margin-bottom: 0.5rem;
+            }
           }
         }
       }
     }
   }
 
-
   &#education {
     & > ul > li {
-      margin-bottom: 10px;
+      margin-bottom: 1rem;
     }
     h3 {
       font-size: 10pt;
@@ -302,21 +318,21 @@ section {
         top: 0px;
         right: -27px;
       }
-      
+
       .date.y_2005 {
-        top: 83%;
+        top: 86%;
       }
 
       .date.y_2008 {
-        top: 59%;
+        top: 62%;
       }
 
       .date.y_2009 {
-        top: 36%;
+        top: 39%;
       }
 
       .date.y_2010 {
-        top: 13%;
+        top: 17%;
       }
     }
 
@@ -332,7 +348,7 @@ section {
   &#languages_skills {
     font-size: 11pt;
     p {
-      margin: 5px 3px 3px 12px;
+      margin: 0;
       font-size: 10pt;
     }
     ul {
@@ -341,18 +357,18 @@ section {
       width: 32%;
       font-size: 10pt;
       text-align: right;
-      &.languages{
+      &.languages {
         width: 26%;
       }
-      &.front{
+      &.front {
         width: 35%;
       }
-      &.back{
+      &.back {
         width: 37%;
       }
       img {
         height: 14px;
-        &.hidden{
+        &.hidden {
           visibility: hidden;
         }
       }
@@ -377,10 +393,7 @@ section {
       font-size: 11pt;
     }
   }
-  
 }
-
-
 
 #social {
   position: absolute;
@@ -392,9 +405,7 @@ section {
     background-color: white;
     border: 1px solid #999;
     border: 1px solid rgba(0, 0, 0, 0.3);
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    border-radius: 6px;
+    border-radius: $radius;
   }
   ul {
     list-style: none;
