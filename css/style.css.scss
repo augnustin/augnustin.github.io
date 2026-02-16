@@ -446,7 +446,7 @@ section {
   }
 
   #social-content {
-    text-align: center;
+    text-align: left;
     padding: 5px;
     background-color: white;
     border: 1px solid #999;
@@ -463,10 +463,43 @@ section {
   }
   img.social {
     margin: 2px;
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    overflow: hidden;
+
     &:hover {
-      -webkit-box-shadow: -3px -3px 7px rgba(0, 0, 0, 0.3);
-      -moz-box-shadow: -3px -3px 7px rgba(0, 0, 0, 0.3);
-      box-shadow: -3px -3px 7px rgba(0, 0, 0, 0.3);
+      font-weight: bold;
+
+      img {
+        opacity: 0.9;
+      }
+    }
+
+    .label {
+      max-width: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      transition:
+        max-width 0.3s ease,
+        padding 0.3s ease;
+      font-size: 10px;
+      color: #333;
+      padding: 0;
     }
   }
+
+  &:hover a .label {
+    max-width: 150px;
+    padding-left: 5px;
+  }
+}
+
+/* Hide current language flag */
+html[lang="en"] #social a[data-lang="en"],
+html[lang="fr"] #social a[data-lang="fr"] {
+  display: none;
 }
