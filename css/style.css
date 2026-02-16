@@ -5,22 +5,37 @@ body {
   margin: 0;
   font-weight: 300;
 }
+@media print {
+  body {
+    background: none;
+  }
+}
 
 #page {
   margin: 0;
-  width: 21cm;
-  height: 27.9cm;
+  width: 210mm;
+  height: 297mm;
   background-color: white;
   color: rgb(64, 61, 58);
   position: absolute;
   left: 50%;
   margin-left: -10.5cm;
-  text-align: justify;
-  padding: 1rem;
+  box-sizing: border-box;
 }
-
-#content {
-  float: left;
+@media print {
+  #page {
+    margin-left: 0;
+    left: 0;
+    position: relative;
+  }
+}
+#page .page-content {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  height: 100%;
+  box-sizing: border-box;
+  gap: 1rem;
 }
 
 a {
@@ -34,7 +49,7 @@ a {
 
 header {
   display: flex;
-  flex-direction: horizontal;
+  flex-direction: row;
   justify-content: space-between;
 }
 header #name {
@@ -43,19 +58,20 @@ header #name {
   color: rgb(33, 88, 104);
   display: flex;
   align-items: center;
+  margin-top: 0;
+  margin-bottom: 0;
   margin-left: 20px;
 }
-header #details {
+header ul#details {
   display: flex;
-  align-items: center;
   font-size: 10pt;
-}
-header #details ul {
+  flex-direction: column;
+  justify-content: space-around;
   margin: 0;
   padding: 0;
   list-style: none;
 }
-header #details ul li {
+header ul#details li {
   padding: 2px;
   padding-left: 25px;
   background-repeat: no-repeat;
@@ -99,12 +115,17 @@ header #photo img {
 
 #title {
   width: 100%;
-  float: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
 }
 #title span {
   font-size: 10pt;
   font-style: italic;
   margin-left: 20px;
+  position: relative;
+  top: -2rem;
 }
 #title span:before {
   content: url(../img/quote_open.png);
@@ -112,40 +133,45 @@ header #photo img {
 #title span:after {
   content: url(../img/quote_close.png);
 }
-#title h1 {
-  float: right;
+#title div {
+  width: 70%;
+  margin-bottom: 1rem;
+}
+#title div h1 {
   color: white;
   background-image: url(../img/banner.png);
   background-repeat: no-repeat;
-  font-size: 16pt;
+  font-size: 17pt;
   font-weight: normal;
-  width: 520px;
-  height: 50px;
   padding-left: 35px;
-  padding-top: 18px;
+  padding-top: 16px;
   font-variant: small-caps;
   margin-bottom: 0px;
   print-color-adjust: exact;
   -webkit-print-color-adjust: exact;
 }
 
-.left-col {
-  float: left;
-  width: 38%;
-  clear: both;
+.dual-col {
+  display: flex;
+  gap: 1rem;
 }
-
-.right-col {
-  width: 59%;
-  float: right;
+.dual-col .left-col,
+.dual-col .right-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.dual-col .left-col {
+  width: 45%;
+}
+.dual-col .right-col {
+  width: 55%;
 }
 
 section {
-  margin-bottom: 1rem;
   position: relative;
   padding: 0.5rem;
   font-size: 0.9em;
-  float: left;
   border-radius: 0.5rem;
   box-shadow: 0 0 10px #ccc;
 }
@@ -220,7 +246,7 @@ section#working_experience ul.timeline li.dot {
   width: 90px;
   position: absolute;
   right: 100%;
-  margin-right: 3px;
+  margin-right: 6px;
 }
 section#working_experience ul.timeline li.dot:after {
   content: "";
@@ -229,8 +255,15 @@ section#working_experience ul.timeline li.dot:after {
   border-radius: 20px;
   position: absolute;
   background-color: rgb(64, 61, 58);
-  right: -12px;
+  right: -15px;
   top: 8px;
+}
+html[lang=fr] section#working_experience ul.timeline li.dot[data-fr="Aujourd'hui"] {
+  top: 15px;
+}
+html[lang=fr] section#working_experience ul.timeline li.dot[data-fr="Aujourd'hui"]:after {
+  top: -7px;
+  right: -10px;
 }
 section#working_experience ul.timeline li:not(.dot) {
   display: flex;
@@ -267,27 +300,33 @@ section#education > ul > li {
   margin-bottom: 1rem;
 }
 section#education h3 {
-  font-size: 10pt;
+  font-size: 11pt;
   font-weight: bold;
 }
-section#education h4 {
-  text-align: left;
-  font-weight: normal;
-  font-size: 10pt;
-  margin: 0;
-  margin-left: 20px;
+section#education h3[data-has-diploma] {
   position: relative;
 }
-section#education h4:before {
+section#education h3[data-has-diploma]:before {
   background-image: url(../img/diploma.png);
   content: "";
   position: absolute;
   width: 20px;
   height: 20px;
   display: block;
-  left: -25px;
+  right: 5px;
   background-size: 20px 20px;
   top: 5px;
+}
+section#education h4 {
+  text-align: right;
+  font-weight: normal;
+  font-size: 10pt;
+  margin: 0;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
 }
 section#education ul .date:not(:first-child):after {
   content: ">";
@@ -308,13 +347,6 @@ section#education ul .date.y_2009 {
 section#education ul .date.y_2010 {
   top: 17%;
 }
-section#education .righter {
-  float: right;
-  text-align: right;
-  font-size: 7pt;
-  position: relative;
-  max-width: 85px;
-}
 section#languages_skills {
   font-size: 11pt;
 }
@@ -322,27 +354,35 @@ section#languages_skills p {
   margin: 0;
   font-size: 10pt;
 }
-section#languages_skills ul {
-  display: inline-block;
+section#languages_skills .skills-container {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
+section#languages_skills .skills-container ul {
+  display: flex;
+  flex-direction: column;
   padding-left: 0;
-  width: 32%;
   font-size: 10pt;
   text-align: right;
+  margin-bottom: 0;
 }
-section#languages_skills ul.languages {
-  width: 26%;
-}
-section#languages_skills ul.front {
-  width: 35%;
-}
-section#languages_skills ul.back {
-  width: 37%;
-}
-section#languages_skills ul img {
+section#languages_skills .skills-container ul img {
   height: 14px;
 }
-section#languages_skills ul img.hidden {
-  visibility: hidden;
+section#languages_skills .skills-container ul img.faded {
+  opacity: 0.3;
+}
+section#hobbies {
+  flex: 1;
+  margin-bottom: 0;
+}
+section#hobbies div {
+  width: 100%;
+  height: 75%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 section#hobbies ul {
   list-style-image: url(../img/like.png);
@@ -364,6 +404,11 @@ section#hobbies h3 {
   position: absolute;
   margin: 20px 20px;
   opacity: 0.5;
+}
+@media print {
+  #social {
+    display: none;
+  }
 }
 #social #social-content {
   text-align: center;

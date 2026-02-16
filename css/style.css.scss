@@ -10,6 +10,9 @@ $box-shaddow: 0 0 10px #ccc;
 body {
   font-family: "Open Sans", sans-serif;
   background-color: black;
+  @media print {
+    background: none;
+  }
   padding: 0;
   margin: 0;
   font-weight: 300;
@@ -17,19 +20,29 @@ body {
 
 #page {
   margin: 0;
-  width: 21cm;
-  height: 27.9cm;
+  width: 210mm;
+  height: 297mm;
   background-color: white;
   color: $text-color;
   position: absolute;
   left: 50%;
   margin-left: -10.5cm;
-  text-align: justify;
-  padding: 1rem;
-}
+  box-sizing: border-box;
 
-#content {
-  float: left;
+  @media print {
+    margin-left: 0;
+    left: 0;
+    position: relative;
+  }
+
+  .page-content {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    height: 100%;
+    box-sizing: border-box;
+    gap: 1rem;
+  }
 }
 
 a {
@@ -43,7 +56,7 @@ a {
 
 header {
   display: flex;
-  flex-direction: horizontal;
+  flex-direction: row;
   justify-content: space-between;
   #name {
     font-size: 24pt;
@@ -51,25 +64,28 @@ header {
     color: $theme-blue;
     display: flex;
     align-items: center;
+    margin-top: 0;
+    margin-bottom: 0;
     margin-left: 20px;
   }
 
-  #details {
+  ul#details {
     display: flex;
-    align-items: center;
     font-size: 10pt;
-    ul {
-      margin: 0;
-      padding: 0;
-      list-style: none;
 
-      li {
-        padding: 2px;
-        padding-left: 25px;
-        background-repeat: no-repeat;
-        background-position: 0% 50%;
-        line-height: 16px;
-      }
+    flex-direction: column;
+    justify-content: space-around;
+
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      padding: 2px;
+      padding-left: 25px;
+      background-repeat: no-repeat;
+      background-position: 0% 50%;
+      line-height: 16px;
     }
   }
 
@@ -113,11 +129,16 @@ header {
 
 #title {
   width: 100%;
-  float: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
   span {
     font-size: 10pt;
     font-style: italic;
     margin-left: 20px;
+    position: relative;
+    top: -2rem;
     &:before {
       content: url(../img/quote_open.png);
     }
@@ -125,41 +146,49 @@ header {
       content: url(../img/quote_close.png);
     }
   }
-  h1 {
-    float: right;
-    color: white;
-    background-image: url(../img/banner.png);
-    background-repeat: no-repeat;
-    font-size: 16pt;
-    font-weight: normal;
-    width: 520px;
-    height: 50px;
-    padding-left: 35px;
-    padding-top: 18px;
-    font-variant: small-caps;
-    margin-bottom: 0px;
-    print-color-adjust: exact;
-    -webkit-print-color-adjust: exact;
+  div {
+    width: 70%;
+    margin-bottom: 1rem;
+
+    h1 {
+      color: white;
+      background-image: url(../img/banner.png);
+      background-repeat: no-repeat;
+      font-size: 17pt;
+      font-weight: normal;
+      padding-left: 35px;
+      padding-top: 16px;
+      font-variant: small-caps;
+      margin-bottom: 0px;
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
   }
 }
 
-.left-col {
-  float: left;
-  width: 38%;
-  clear: both;
-}
+.dual-col {
+  display: flex;
+  gap: 1rem;
+  .left-col,
+  .right-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
 
-.right-col {
-  width: 59%;
-  float: right;
+  .left-col {
+    width: 45%;
+  }
+
+  .right-col {
+    width: 55%;
+  }
 }
 
 section {
-  margin-bottom: 1rem;
   position: relative;
   padding: 0.5rem;
   font-size: 0.9em;
-  float: left;
   border-radius: $radius;
   box-shadow: $box-shaddow;
   h2 {
@@ -236,7 +265,7 @@ section {
           width: 90px;
           position: absolute;
           right: 100%;
-          margin-right: 3px;
+          margin-right: 6px;
           &:after {
             content: "";
             width: 9px;
@@ -244,8 +273,15 @@ section {
             border-radius: 20px;
             position: absolute;
             background-color: $text-color;
-            right: -12px;
+            right: -15px;
             top: 8px;
+          }
+          html[lang="fr"] &[data-fr="Aujourd'hui"] {
+            top: 15px;
+            &:after {
+              top: -7px;
+              right: -10px;
+            }
           }
         }
         &:not(.dot) {
@@ -288,27 +324,33 @@ section {
       margin-bottom: 1rem;
     }
     h3 {
-      font-size: 10pt;
+      font-size: 11pt;
       font-weight: bold;
+      &[data-has-diploma] {
+        position: relative;
+        &:before {
+          background-image: url(../img/diploma.png);
+          content: "";
+          position: absolute;
+          width: 20px;
+          height: 20px;
+          display: block;
+          right: 5px;
+          background-size: 20px 20px;
+          top: 5px;
+        }
+      }
     }
     h4 {
-      text-align: left;
+      text-align: right;
       font-weight: normal;
       font-size: 10pt;
       margin: 0;
-      margin-left: 20px;
       position: relative;
-      &:before {
-        background-image: url(../img/diploma.png);
-        content: "";
-        position: absolute;
-        width: 20px;
-        height: 20px;
-        display: block;
-        left: -25px;
-        background-size: 20px 20px;
-        top: 5px;
-      }
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: baseline;
     }
     ul {
       .date:not(:first-child):after {
@@ -335,14 +377,6 @@ section {
         top: 17%;
       }
     }
-
-    .righter {
-      float: right;
-      text-align: right;
-      font-size: 7pt;
-      position: relative;
-      max-width: 85px;
-    }
   }
 
   &#languages_skills {
@@ -351,31 +385,38 @@ section {
       margin: 0;
       font-size: 10pt;
     }
-    ul {
-      display: inline-block;
-      padding-left: 0;
-      width: 32%;
-      font-size: 10pt;
-      text-align: right;
-      &.languages {
-        width: 26%;
-      }
-      &.front {
-        width: 35%;
-      }
-      &.back {
-        width: 37%;
-      }
-      img {
-        height: 14px;
-        &.hidden {
-          visibility: hidden;
+    .skills-container {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: space-between;
+
+      ul {
+        display: flex;
+        flex-direction: column;
+        padding-left: 0;
+        font-size: 10pt;
+        text-align: right;
+        margin-bottom: 0;
+        img {
+          height: 14px;
+          &.faded {
+            opacity: 0.3;
+          }
         }
       }
     }
   }
 
   &#hobbies {
+    flex: 1;
+    margin-bottom: 0;
+    div {
+      width: 100%;
+      height: 75%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
     ul {
       list-style-image: url(../img/like.png);
       list-style-position: inside;
@@ -399,6 +440,11 @@ section {
   position: absolute;
   margin: 20px 20px;
   opacity: 0.5;
+
+  @media print {
+    display: none;
+  }
+
   #social-content {
     text-align: center;
     padding: 5px;
