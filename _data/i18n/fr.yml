@@ -6,8 +6,11 @@ meta:
   description: CV d'Augustin Riedinger, ingénieur web fullstack.
 
 toolbar:
-  label: Langue et téléchargement
+  label: Langue, zoom et téléchargement
   pdf: /CV-Augustin-Riedinger-French.pdf
+  zoom_out: Zoom arrière
+  zoom_in: Zoom avant
+  zoom_reset: Réinitialiser le zoom
 
 identity:
   role: Ingénieur web fullstack

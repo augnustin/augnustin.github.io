@@ -1,7 +1,8 @@
 # augnustin.github.io — online resume
 
 Augustin Riedinger's resume, served by GitHub Pages from `master`. GitHub Pages builds it with Jekyll on push, so
-the result is plain static HTML + CSS: no JavaScript, no build step to run or commit by hand.
+the result is plain static HTML + CSS (plus one small optional script for zoom), with no build step to run or
+commit by hand.
 
 ## Where things live
 
@@ -15,6 +16,7 @@ _data/i18n/en.yml           every English string, same keys as fr.yml
 _layouts/resume.html        the markup (Liquid template), no text and no styling
 _includes/icons/*.svg       inline SVG icons used by the layout
 css/resume.css              all styling; design tokens on :root
+js/zoom.js                  the toolbar's zoom − / + (the only script)
 index.html, en/index.html   front-matter stubs: `layout: resume` + `lang: fr|en` → / and /en/
 bin/print-pdf               regenerates the two PDFs (see PDFs)
 _config.yml                 site url, language switcher entries (code, label, path), excluded files
@@ -37,19 +39,25 @@ CV-Augustin-Riedinger-*.pdf PDFs linked from the toolbar
 
 ## Rules
 
-- **Static only.** Nothing but what GitHub Pages' built-in Jekyll can build: no plugins, no JS, no CDN except Google
+- **Static only.** Nothing but what GitHub Pages' built-in Jekyll can build: no plugins, no CDN except Google
   Fonts. Use `relative_url` for local assets.
+- **JavaScript is optional enhancement only.** The resume must be complete without it. The one script,
+  `js/zoom.js`, only drives the zoom control, which ships `hidden` and is revealed by the script.
 - **Form vs style vs content.** No text in the layout, no `style="…"` in the markup, no content in CSS. Colors,
   fonts, spacing (`--space-section`, `--space-title`) and honeycomb size (`--cell-w`) are tokens on `:root`.
 - **One A4 sheet on desktop.** `.sheet` is fixed at `210mm × 297mm` with `overflow: hidden`, so content that does
   not fit is silently clipped. French is the longer version; after any content or spacing change, check it still
   fits with a bottom margin (see Checking). There is little slack (~35px in French).
-- **Web UI stays off the document.** The toolbar (FR/EN switch + PDF download) is a `<nav>` before `<main
-class="sheet">`, centered above the sheet on the desk background, and hidden in print. Nothing interactive that
+- **Web UI stays off the document.** The toolbar (FR/EN switch, zoom − / +, PDF download) is a `<nav>` before
+  `<main class="sheet">`, centered above the sheet on the desk background, and hidden in print. Nothing interactive that
   isn't part of the resume itself goes inside `.sheet`.
 - **Responsive on mobile.** Under `screen and (max-width: 820px)` the sheet becomes a fluid page: toolbar as a slim
   bar on top, then portrait, identity, contacts. Scoped to `screen` because an A4 page (~794px) would otherwise trigger it
   when printing.
+- **Zoom.** Pages can't trigger the browser's own zoom, so `js/zoom.js` sets `--zoom` on `<html>` and the sheet
+  uses the CSS `zoom` property (re-lays out like browser zoom; the toolbar stays put). Levels mirror the browser's
+  (50%–200%), clicking the percentage resets to 100%, and the choice is kept in `localStorage`. The control is
+  hidden and zoom forced to 1 on mobile (pinch-zoom instead) and in print.
 - **Print = one A4 page.** `@page { size: A4; margin: 0 }`; the toolbar (`.no-print`) is hidden.
 
 ## Portrait

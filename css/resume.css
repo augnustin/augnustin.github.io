@@ -123,6 +123,7 @@ svg {
   height: var(--sheet-h);
   margin: 0 auto 32px;
   overflow: hidden;
+  zoom: var(--zoom, 1); /* set by js/zoom.js */
   display: flex;
   flex-direction: column;
   background: var(--paper);
@@ -170,6 +171,56 @@ svg {
 .lang-switch a[aria-current="page"] {
   background: var(--accent);
   color: var(--on-accent);
+}
+
+/* Zoom − 100% + : same pill as .lang-switch */
+.zoom {
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  border: 1px solid rgb(30 58 95 / 0.3);
+  border-radius: 999px;
+}
+
+.zoom[hidden] {
+  display: none;
+}
+
+.zoom button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.zoom button:hover:not(:disabled) {
+  background: rgb(30 58 95 / 0.1);
+}
+
+.zoom button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.zoom button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.zoom__button {
+  width: 30px;
+}
+
+.zoom__value {
+  min-width: 48px;
+  padding: 0 4px;
+  font-variant-numeric: tabular-nums;
 }
 
 .toolbar__pdf {
@@ -598,6 +649,12 @@ svg {
     margin: 0;
     overflow: visible;
     box-shadow: none;
+    zoom: 1;
+  }
+
+  /* No sheet to zoom here: pinch-zoom does the job */
+  .zoom {
+    display: none;
   }
 
   .section-title {
@@ -609,8 +666,11 @@ svg {
     padding-bottom: 32px;
   }
 
+  /* Everything in the header is centered */
   .masthead__grid {
     grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    text-align: center;
   }
 
   /* Flatten the side column so it stacks: portrait, identity & contacts, location */
@@ -640,11 +700,21 @@ svg {
   }
 
   .identity__role {
+    justify-content: center;
     font-size: 24px;
   }
 
   .identity__quote {
+    margin-left: 0;
     font-size: 20px;
+  }
+
+  .contacts {
+    align-items: center;
+  }
+
+  .contacts__row {
+    justify-content: center;
   }
 
   .contact {
@@ -654,7 +724,6 @@ svg {
   }
 
   .location {
-    justify-self: start;
     font-size: 13px;
   }
 
@@ -758,6 +827,7 @@ svg {
   .sheet {
     margin: 0;
     box-shadow: none;
+    zoom: 1;
   }
 
   .no-print {

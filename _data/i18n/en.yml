@@ -6,8 +6,11 @@ meta:
   description: Resume of Augustin Riedinger, fullstack web engineer.
 
 toolbar:
-  label: Language and download
+  label: Language, zoom and download
   pdf: /CV-Augustin-Riedinger-English.pdf
+  zoom_out: Zoom out
+  zoom_in: Zoom in
+  zoom_reset: Reset zoom
 
 identity:
   role: Fullstack web engineer
