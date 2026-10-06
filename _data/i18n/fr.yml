@@ -1,0 +1,92 @@
+# Français — served at /
+# Same keys as en.yml. Ids under skills, jobs, schools and spoken match _data/profile.yml.
+
+meta:
+  title: CV · Augustin Riedinger
+  description: CV d'Augustin Riedinger, ingénieur web fullstack.
+
+toolbar:
+  label: Langue et téléchargement
+  pdf: /CV-Augustin-Riedinger-French.pdf
+
+identity:
+  role: Ingénieur web fullstack
+  quote: « Passionné et pragmatique. »
+  portrait_alt: Portrait d'Augustin Riedinger
+  location: Montpellier, France
+
+hive:
+  title: |-
+    Ingénieur produit
+    de bout en bout.
+  lead: >-
+    J'assure la mise en œuvre technique de vos projets, du serveur à l'interface, par le développement ou l'encadrement selon les besoins.
+
+skills:
+  frontend: Front-end
+  backend: Back-end
+  database: Base de données
+  hosting: Hébergement
+  product: Produit
+  design: UI / UX
+  qa: Qualité
+  management: Management
+
+logbook:
+  title: Expérience professionnelle.
+  clients: Principaux clients
+
+jobs:
+  freelance:
+    year: Auj.
+    title: Développeur web freelance
+    description: >-
+      Réalisation de nombreuses missions, en tant que développeur fullstack, lead, frontend ou backend.
+      Participation à plusieurs projets open source.
+  lewagon:
+    title: Formateur Ruby on Rails
+    description: >-
+      Sessions de formation de 2 mois pour entrepreneurs. Enseignement des bonnes pratiques en Rails et en
+      développement front-end.
+  copass:
+    title: CTO & cofondateur
+    description: >-
+      Expérience entrepreneuriale : mise en œuvre d'une marketplace du coworking avec Ruby on Rails, Postgres et
+      React. Direction d'une équipe technique de 3 personnes.
+  talan:
+    title: Consultant SI
+    description: >-
+      Large projet en développement agile de restructuration du système d'information d'une grande compagnie
+      ferroviaire française.
+
+training:
+  title: Une formation d'ingénieur reconnue.
+
+schools:
+  telecom:
+    degree: Diplôme d'ingénieur en télécommunication
+  eurecom:
+    degree: Diplôme d'ingénieur en télécommunication, filière multimédia
+  uq:
+    name: Université du Queensland
+    degree: Master des technologies de l'information
+  hoche:
+    degree: Classes préparatoires MPSI-MP*, Versailles
+
+languages:
+  title: Langues
+
+spoken:
+  fr: Français
+  en: English
+  es: Español
+  de: Deutsch
+
+levels:
+  native: Langue maternelle
+  fluent: Courant
+  intermediate: Intermédiaire
+
+hobbies:
+  title: Loisirs
+  text: Planche à voile, voile, apnée, vélo, musique.

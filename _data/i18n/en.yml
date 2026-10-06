@@ -1,0 +1,88 @@
+# English — served at /en/
+# Same keys as fr.yml. Ids under skills, jobs, schools and spoken match _data/profile.yml.
+
+meta:
+  title: Resume · Augustin Riedinger
+  description: Resume of Augustin Riedinger, fullstack web engineer.
+
+toolbar:
+  label: Language and download
+  pdf: /CV-Augustin-Riedinger-English.pdf
+
+identity:
+  role: Fullstack web engineer
+  quote: “Passionate and pragmatic.”
+  portrait_alt: Portrait of Augustin Riedinger
+  location: Montpellier, France
+
+hive:
+  title: Every cell of a product.
+  lead: >-
+    A fullstack product engineer: I can develop, but also lead and mentor teams.
+
+skills:
+  frontend: Front-end
+  backend: Back-end
+  database: Database
+  hosting: Hosting
+  product: Product
+  design: UI / UX
+  qa: QA
+  management: Management
+
+logbook:
+  title: Professional Experience.
+  clients: Main clients
+
+jobs:
+  freelance:
+    year: Now
+    title: Freelance web developer
+    description: >-
+      Multiple missions as fullstack, lead, frontend or backend developer. Contributed to several open-source
+      projects along the way.
+  lewagon:
+    title: Ruby on Rails teacher
+    description: >-
+      Taught two-month bootcamps for entrepreneurs, with a focus on best practices in Rails and front-end
+      development.
+  copass:
+    title: CTO & co-founder
+    description: >-
+      Entrepreneurship experience: built a complete marketplace of coworking spaces with Ruby on Rails, Postgres
+      and React. Managed a tech team of three.
+  talan:
+    title: IT consultant
+    description: >-
+      Large agile project restructuring the information system of the French national railway company.
+
+training:
+  title: Engineer by training.
+
+schools:
+  telecom:
+    degree: Master of Engineering, Telecommunication
+  eurecom:
+    degree: Master of Engineering, Telecommunication, Multimedia track
+  uq:
+    degree: Master of Information Technology (exchange)
+  hoche:
+    degree: Classes préparatoires MPSI-MP*, Versailles
+
+languages:
+  title: Languages
+
+spoken:
+  fr: Français
+  en: English
+  es: Español
+  de: Deutsch
+
+levels:
+  native: Native
+  fluent: Fluent
+  intermediate: Intermediate
+
+hobbies:
+  title: Off screen
+  text: Windsurfing, sailing, apnea, cycling, music.

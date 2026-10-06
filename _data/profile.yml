@@ -1,0 +1,62 @@
+# Language-independent facts. Every entry with an `id` gets its wording from
+# _data/i18n/<lang>.yml under the same id.
+
+first_name: Augustin
+last_name: Riedinger
+portrait: /img/portrait.jpg
+
+email: augustin.riedinger@gmail.com
+phone:
+  label: +33 6 18 42 67 07
+  number: "+33618426707"
+
+links:
+  - label: augustin-riedinger.fr
+    url: https://augustin-riedinger.fr
+  - label: LinkedIn
+    url: https://www.linkedin.com/in/augustinriedinger/
+  - label: GitHub
+    url: https://github.com/augnustin
+
+# One entry per line
+stack:
+  - [TypeScript, Ruby on Rails, Elixir]
+  - [React, Vue, Python, PostgreSQL]
+
+# Honeycomb, two rows of four. tone: strong (navy) | signal (sand) | omitted (light)
+skills:
+  - - { id: frontend, tone: strong }
+    - { id: backend, tone: strong }
+    - { id: database }
+    - { id: hosting }
+  - - { id: product }
+    - { id: design, tone: signal }
+    - { id: qa }
+    - { id: management, tone: strong }
+
+clients:
+  - { name: beta.gouv, url: "https://beta.gouv.fr" }
+  - { name: Granular Energy, url: "https://www.granular-energy.com" }
+  - { name: Mojjo, url: "https://mojjo.fr" }
+  - { name: les Écologistes, url: "https://ecologie2024.eu" }
+  - { name: Rubix, url: "https://fr.rubix.com" }
+
+# Most recent first. `current` highlights the entry and shows the clients.
+jobs:
+  - { id: freelance, current: true }
+  - { id: lewagon, year: 2015, org: Le Wagon, url: "https://www.lewagon.com/" }
+  - { id: copass, year: 2014, org: Copass, url: "https://copass.org" }
+  - { id: talan, year: 2012, org: Talan Consulting, url: "https://consulting.talan.com" }
+
+schools:
+  - { id: telecom, year: 2010, name: Télécom Paris }
+  - { id: eurecom, year: 2009, name: EURECOM }
+  - { id: uq, year: 2008, name: University of Queensland }
+  - { id: hoche, year: 2005, name: Lycée Hoche }
+
+# `level`: key into `levels` of the i18n file.
+spoken:
+  - { id: fr, level: native }
+  - { id: en, level: fluent }
+  - { id: es, level: intermediate }
+  - { id: de, level: intermediate }

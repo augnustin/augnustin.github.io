@@ -1,0 +1,14 @@
+# Built by GitHub Pages (Jekyll). Local preview: see CLAUDE.md.
+url: https://augnustin.github.io
+
+# Versions of the resume, in switcher order. `code` selects _data/i18n/<code>.yml.
+languages:
+  - { code: fr, label: FR, path: / }
+  - { code: en, label: EN, path: /en/ }
+
+exclude:
+  - CLAUDE.md
+  - bin
+  - img/portrait.png # source of img/portrait.jpg
+  - node_modules
+  - .prettierrc.json

@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# Regenerate the downloadable PDFs from the live layout:
+#   CV-Augustin-Riedinger-French.pdf  ← /
+#   CV-Augustin-Riedinger-English.pdf ← /en/
+# Builds with Jekyll, serves _site on a local port, prints each page with headless Chrome,
+# and fails if a PDF is not exactly one page.
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+JEKYLL="${JEKYLL:-$(command -v jekyll || echo "$HOME/.gem/ruby/3.0.0/bin/jekyll")}"
+CHROME="${CHROME:-$(command -v google-chrome || command -v chromium || command -v chromium-browser)}"
+PORT="${PORT:-4010}"
+
+"$JEKYLL" build --quiet
+
+python3 -m http.server "$PORT" --directory _site >/dev/null 2>&1 &
+SERVER=$!
+trap 'kill $SERVER 2>/dev/null' EXIT
+sleep 1
+
+print() { # <path> <output>
+  "$CHROME" --headless=new --disable-gpu --no-pdf-header-footer \
+    --virtual-time-budget=6000 --print-to-pdf="$2" "http://localhost:$PORT$1" 2>/dev/null
+  pages=$(pdfinfo "$2" | awk '/^Pages:/ {print $2}')
+  if [ "$pages" != 1 ]; then
+    echo "✗ $2 has $pages pages: content overflows the A4 sheet" >&2
+    exit 1
+  fi
+  echo "✓ $2"
+}
+
+print / CV-Augustin-Riedinger-French.pdf
+print /en/ CV-Augustin-Riedinger-English.pdf
