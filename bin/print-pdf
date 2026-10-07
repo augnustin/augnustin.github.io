@@ -2,8 +2,10 @@
 # Regenerate the downloadable PDFs from the live layout:
 #   CV-Augustin-Riedinger-French.pdf  ← /
 #   CV-Augustin-Riedinger-English.pdf ← /en/
-# Builds with Jekyll, serves _site on a local port, prints each page with headless Chrome,
-# and fails if a PDF is not exactly one page.
+# Builds the site into a temporary folder (so a running `jekyll serve`, which rebuilds _site whenever
+# a PDF is written, can't interfere), serves it on a local port, checks the content fits the A4 sheet
+# (the sheet clips overflow silently, so a clipped page would still print as one page), prints each page
+# with headless Chrome, and fails if a PDF is not exactly one page.
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -12,22 +14,52 @@ JEKYLL="${JEKYLL:-$(command -v jekyll || echo "$HOME/.gem/ruby/3.0.0/bin/jekyll"
 CHROME="${CHROME:-$(command -v google-chrome || command -v chromium || command -v chromium-browser)}"
 PORT="${PORT:-4010}"
 
-"$JEKYLL" build --quiet
+WORK=$(mktemp -d)
+SITE="$WORK/site"
+"$JEKYLL" build --quiet --destination "$SITE"
 
-python3 -m http.server "$PORT" --directory _site >/dev/null 2>&1 &
+python3 -m http.server "$PORT" --directory "$SITE" >/dev/null 2>&1 &
 SERVER=$!
-trap 'kill $SERVER 2>/dev/null' EXIT
+trap 'kill $SERVER 2>/dev/null; rm -r "$WORK"' EXIT
 sleep 1
 
+# Loads ?page=… in a same-origin iframe and reports, in the document title, the space left under the
+# last block of the sheet (negative = clipped). Measured once the web fonts are in, as they change wrapping.
+cat >"$SITE/__fit.html" <<'HTML'
+<iframe id="page" style="width:1000px;height:1300px"></iframe>
+<script>
+  page.src = new URLSearchParams(location.search).get("page");
+  page.onload = () =>
+    page.contentDocument.fonts.ready.then(() => {
+      const sheet = page.contentDocument.querySelector(".sheet");
+      const spare = sheet.getBoundingClientRect().bottom - sheet.lastElementChild.getBoundingClientRect().bottom;
+      document.title = "spare=" + Math.floor(spare);
+    });
+</script>
+HTML
+
+chrome() { # headless Chrome with a fresh profile each run, so runs don't collide on the profile lock
+  "$CHROME" --headless=new --disable-gpu --user-data-dir="$(mktemp -d -p "$WORK")" "$@" 2>/dev/null
+}
+
 print() { # <path> <output>
-  "$CHROME" --headless=new --disable-gpu --no-pdf-header-footer \
-    --virtual-time-budget=6000 --print-to-pdf="$2" "http://localhost:$PORT$1" 2>/dev/null
-  pages=$(pdfinfo "$2" | awk '/^Pages:/ {print $2}')
-  if [ "$pages" != 1 ]; then
-    echo "✗ $2 has $pages pages: content overflows the A4 sheet" >&2
+  spare=$(chrome --virtual-time-budget=10000 --dump-dom "http://localhost:$PORT/__fit.html?page=$1" |
+    sed -n 's/.*<title>spare=\(-\{0,1\}[0-9]*\)<\/title>.*/\1/p')
+  if [ -z "$spare" ]; then
+    echo "✗ $1: couldn't measure the page (is Chrome working?)" >&2
+    exit 1
+  elif [ "$spare" -lt 0 ]; then
+    echo "✗ $1 overflows the A4 sheet by ${spare#-}px: trim content or spacing" >&2
     exit 1
   fi
-  echo "✓ $2"
+
+  chrome --no-pdf-header-footer --virtual-time-budget=6000 --print-to-pdf="$2" "http://localhost:$PORT$1"
+  pages=$(pdfinfo "$2" | awk '/^Pages:/ {print $2}')
+  if [ "$pages" != 1 ]; then
+    echo "✗ $2 has $pages pages" >&2
+    exit 1
+  fi
+  echo "✓ $2 (${spare}px left at the bottom)"
 }
 
 print / CV-Augustin-Riedinger-French.pdf

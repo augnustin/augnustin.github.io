@@ -3,7 +3,7 @@
 
 meta:
   title: CV · Augustin Riedinger
-  description: CV d'Augustin Riedinger, ingénieur web fullstack.
+  description: CV d'Augustin Riedinger, ingénieur web fullstack IA.
 
 toolbar:
   label: Langue, zoom et téléchargement
@@ -13,27 +13,24 @@ toolbar:
   zoom_reset: Réinitialiser le zoom
 
 identity:
-  role: Ingénieur web fullstack
+  role: Ingénieur web fullstack IA
   quote: « Passionné et pragmatique. »
   portrait_alt: Portrait d'Augustin Riedinger
   location: Montpellier, France
 
 hive:
-  title: |-
-    Ingénieur produit
-    de bout en bout.
+  title: Ingénieur produit de bout en bout.
   lead: >-
-    J'assure la mise en œuvre technique de vos projets, du serveur à l'interface, par le développement ou l'encadrement selon les besoins.
+    J'assure la mise en œuvre technique de vos projets, du serveur à l'interface, par le développement, l'encadrement d'une équipe ou d'agents IA.
 
 skills:
   frontend: Front-end
   backend: Back-end
-  database: Base de données
-  hosting: Hébergement
-  product: Produit
   design: UI / UX
-  qa: Qualité
-  management: Management
+  ai: IA
+  ops: Infra / Ops
+  product: Produit
+  team: Équipe
 
 logbook:
   title: Expérience professionnelle.

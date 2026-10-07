@@ -3,7 +3,7 @@
 
 meta:
   title: Resume · Augustin Riedinger
-  description: Resume of Augustin Riedinger, fullstack web engineer.
+  description: Resume of Augustin Riedinger, AI fullstack web engineer.
 
 toolbar:
   label: Language, zoom and download
@@ -13,7 +13,7 @@ toolbar:
   zoom_reset: Reset zoom
 
 identity:
-  role: Fullstack web engineer
+  role: AI fullstack web engineer
   quote: “Passionate and pragmatic.”
   portrait_alt: Portrait of Augustin Riedinger
   location: Montpellier, France
@@ -21,17 +21,16 @@ identity:
 hive:
   title: Every cell of a product.
   lead: >-
-    A fullstack product engineer: I can develop, but also lead and mentor teams.
+    A fullstack product engineer: I can develop, but also lead and mentor teams of humans or AI agents.
 
 skills:
   frontend: Front-end
   backend: Back-end
-  database: Database
-  hosting: Hosting
-  product: Product
   design: UI / UX
-  qa: QA
-  management: Management
+  ai: AI
+  ops: Infra / Ops
+  product: Product
+  team: Team
 
 logbook:
   title: Professional Experience.

@@ -47,7 +47,7 @@ CV-Augustin-Riedinger-*.pdf PDFs linked from the toolbar
   fonts, spacing (`--space-section`, `--space-title`) and honeycomb size (`--cell-w`) are tokens on `:root`.
 - **One A4 sheet on desktop.** `.sheet` is fixed at `210mm × 297mm` with `overflow: hidden`, so content that does
   not fit is silently clipped. French is the longer version; after any content or spacing change, check it still
-  fits with a bottom margin (see Checking). There is little slack (~35px in French).
+  fits with a bottom margin (see Checking). There is little slack (~20px in French).
 - **Web UI stays off the document.** The toolbar (FR/EN switch, zoom − / +, PDF download) is a `<nav>` before
   `<main class="sheet">`, centered above the sheet on the desk background, and hidden in print. Nothing interactive that
   isn't part of the resume itself goes inside `.sheet`.
@@ -81,8 +81,12 @@ row. Contacts: email + phone on the first row, web links on the second.
 
 - BEM-ish names: block (`.job`), element (`.job__title`), modifier (`.job--current`, `.cell--strong`).
 - Helpers: `.hex` (hexagon `clip-path`), `.eyebrow` (mono uppercase label), `.section-title`, `.chip`.
-- Honeycomb geometry derives from `--cell-w` / `--cell-gap`; tune those, not individual cells. Long labels
-  ("Management", "Hébergement") must stay inside their cell.
+- Honeycomb: rows come from `skills` in `profile.yml` (currently 2-3-2); each row is centered, so rows of
+  different lengths interlock. Geometry derives from `--cell-w` / `--cell-gap`, label size from `--cell-font`;
+  tune those, not individual cells. On desktop the comb bleeds (negative `margin-block` on `.comb`) into the gap
+  under the masthead and beside the next section's left-aligned title, so it can be larger than the text next
+  to it without making the page taller. `featured: true` gives a big label that scales with the cell, `icon: <name>`
+  adds `_includes/icons/<name>.svg` above it. The longest label ("Infra / Ops") must fit on one line.
 - Formatting: Prettier (`.prettierrc.json`, width 120) for CSS and YAML:
   `npx prettier --write css _data _config.yml`. Liquid templates are excluded (`.prettierignore`).
 
@@ -99,6 +103,7 @@ gem install --user-install jekyll:'~>3.10' webrick   # once; GitHub Pages runs J
 
 ## PDFs
 
-`bin/print-pdf` (or the `/print-pdf` skill in `.claude/skills/print-pdf/`) rebuilds the site and regenerates
+`bin/print-pdf` (or the `/print-pdf` skill in `.claude/skills/print-pdf/`) builds the site into a temp folder (so
+it works while `jekyll serve` is running) and regenerates
 `CV-Augustin-Riedinger-French.pdf` and `CV-Augustin-Riedinger-English.pdf` with headless Chrome, failing if either
-is more than one page. Run it after any content or style change so the downloads match the site.
+is more than one page or if content overflows the sheet (it prints the bottom margin left for each). Run it after any content or style change so the downloads match the site.

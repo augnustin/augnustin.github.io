@@ -20,25 +20,27 @@ links:
 
 # One entry per line
 stack:
-  - [TypeScript, Ruby on Rails, Elixir]
-  - [React, Vue, Python, PostgreSQL]
+  - [TypeScript, React, Vue]
+  - [Ruby on Rails, Elixir, Python]
+  - [Docker, Agentic dev, Harness engineering]
 
-# Honeycomb, two rows of four. tone: strong (navy) | signal (sand) | omitted (light)
+# Honeycomb rows, each centered so a 2-3-2 layout interlocks.
+# tone: strong (navy) | signal (sand) | omitted (light). featured: larger label.
+# icon: name of an _includes/icons/<icon>.svg shown above the label.
 skills:
   - - { id: frontend, tone: strong }
     - { id: backend, tone: strong }
-    - { id: database }
-    - { id: hosting }
-  - - { id: product }
-    - { id: design, tone: signal }
-    - { id: qa }
-    - { id: management, tone: strong }
+  - - { id: design }
+    - { id: ai, tone: signal, featured: true, icon: sparkles }
+    - { id: ops }
+  - - { id: product, tone: strong }
+    - { id: team }
 
 clients:
   - { name: beta.gouv, url: "https://beta.gouv.fr" }
   - { name: Granular Energy, url: "https://www.granular-energy.com" }
-  - { name: Mojjo, url: "https://mojjo.fr" }
   - { name: les Écologistes, url: "https://ecologie2024.eu" }
+  - { name: Butter, url: "https://app.butter.markets" }
   - { name: Rubix, url: "https://fr.rubix.com" }
 
 # Most recent first. `current` highlights the entry and shows the clients.

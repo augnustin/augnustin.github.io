@@ -33,12 +33,13 @@
   --gutter: 38px;
 
   /* Vertical rhythm */
-  --space-section: 28px; /* above each section */
+  --space-section: 25px; /* above each section */
   --space-title: 12px; /* between a section title and its content */
 
   /* Honeycomb cell */
-  --cell-w: 76px;
-  --cell-gap: 5px;
+  --cell-w: 72px;
+  --cell-gap: 4px;
+  --cell-font: 10.5px; /* label size; the featured cell scales with --cell-w instead */
 }
 
 /* ---------- Base ---------- */
@@ -405,6 +406,12 @@ svg {
 
 .comb {
   flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* a row of 2 sits half a cell in from a row of 3, so they interlock */
+  /* Bleeds into the empty space above and beside the next section's title (which is left-aligned),
+     so a big comb doesn't make the section taller */
+  margin-block: -12px -32px;
 }
 
 .comb__row {
@@ -412,25 +419,22 @@ svg {
   gap: var(--cell-gap);
 }
 
-/* Rows interlock: each overlaps the previous by ~1/5 of a cell's height
-   and every second row shifts by half a cell. */
+/* Each row overlaps the previous by ~1/5 of a cell's height */
 .comb__row + .comb__row {
   margin-top: calc(var(--cell-w) * -0.227);
 }
 
-.comb__row--offset {
-  margin-left: calc((var(--cell-w) + var(--cell-gap)) / 2);
-}
-
 .cell {
   display: flex;
+  flex-direction: column;
+  gap: 2px;
   align-items: center;
   justify-content: center;
   width: var(--cell-w);
   height: calc(var(--cell-w) * 1.155);
-  padding: 0 9px;
+  padding: 0 3px;
   text-align: center;
-  font-size: 9.5px;
+  font-size: var(--cell-font);
   font-weight: 600;
   line-height: 1.15;
   background: var(--line);
@@ -444,6 +448,11 @@ svg {
 
 .cell--signal {
   background: var(--signal);
+}
+
+.cell--featured {
+  font: 800 calc(var(--cell-w) * 0.3) / 1 var(--font-display);
+  letter-spacing: -0.02em;
 }
 
 /* ---------- 02 · Logbook (experience) ---------- */
@@ -522,6 +531,7 @@ svg {
 }
 
 .chip {
+  display: inline-block; /* so its padding takes room when chips wrap */
   padding: 2px 9px;
   border: 1px solid var(--line);
   border-radius: 999px;
@@ -635,7 +645,9 @@ svg {
     --gutter: 16px;
     --space-section: 40px;
     --space-title: 16px;
-    --cell-w: 72px;
+    --cell-w: 92px;
+    --cell-gap: 6px;
+    --cell-font: 12px;
   }
 
   body {
@@ -678,8 +690,9 @@ svg {
     display: contents;
   }
 
+  /* Language switch top left, PDF top right */
   .toolbar {
-    justify-content: flex-end;
+    justify-content: space-between;
     padding-block: 10px;
     border-bottom: 1px solid var(--line);
     font-size: 14px;
@@ -739,9 +752,8 @@ svg {
     font-size: 13px;
   }
 
-  .cell {
-    padding: 0 8px;
-    font-size: 9.5px;
+  .comb {
+    margin: 32px auto; /* no bleed here: room above and below */
   }
 
   .job {
@@ -756,6 +768,12 @@ svg {
 
   .job__title {
     font-size: 18px;
+  }
+
+  /* Chips wrap over several lines here: give the lines room */
+  .clients {
+    gap: 10px 8px;
+    margin-top: 14px;
   }
 
   .chip {
@@ -785,6 +803,7 @@ svg {
   }
 
   .closing {
+    row-gap: 40px; /* between Langues and Loisirs, now stacked */
     margin-top: 40px;
     margin-bottom: 48px;
   }
@@ -796,13 +815,9 @@ svg {
 
 @media screen and (max-width: 420px) {
   :root {
-    --cell-w: 62px;
-    --cell-gap: 4px;
-  }
-
-  .cell {
-    padding: 0 4px;
-    font-size: 8.5px;
+    --cell-w: 80px;
+    --cell-gap: 5px;
+    --cell-font: 11px;
   }
 
   .schools {

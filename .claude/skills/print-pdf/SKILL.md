@@ -11,12 +11,13 @@ Run from the repository root:
 bin/print-pdf
 ```
 
-It builds the site with Jekyll, serves `_site` locally, prints `/` → `CV-Augustin-Riedinger-French.pdf` and
-`/en/` → `CV-Augustin-Riedinger-English.pdf` with headless Chrome, and checks each PDF is exactly one A4 page.
+It builds the site with Jekyll into a temp folder (so it works while `jekyll serve` runs), serves it locally, prints `/` → `CV-Augustin-Riedinger-French.pdf` and
+`/en/` → `CV-Augustin-Riedinger-English.pdf` with headless Chrome. Before printing it checks the content fits
+the sheet (the sheet clips overflow, so the page count alone can't tell), and after, that each PDF is one page.
 
 ## If it fails
 
-- `✗ … has N pages`: content overflows the A4 sheet. Report which language, and suggest trimming text in
+- `✗ … overflows the A4 sheet by Npx` (or `has N pages`): content doesn't fit. Report which language, and suggest trimming text in
   `_data/i18n/<lang>.yml` or tightening spacing tokens in `css/resume.css`; don't change content without asking.
 - `jekyll` not found: `gem install --user-install 'jekyll:~>3.10' webrick`, or pass `JEKYLL=/path/to/jekyll`.
 - Chrome not found: pass `CHROME=/path/to/chrome`. Port busy: pass `PORT=<free port>`.

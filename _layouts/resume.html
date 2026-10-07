@@ -96,9 +96,10 @@
 
         <div class="comb">
           {%- for row in p.skills %}
-          <div class="comb__row{% if forloop.index0 == 1 %} comb__row--offset{% endif %}">
+          <div class="comb__row">
             {%- for skill in row %}
-            <span class="cell{% if skill.tone %} cell--{{ skill.tone }}{% endif %} hex">{{ t.skills[skill.id] }}</span>
+            <span class="cell{% if skill.tone %} cell--{{ skill.tone }}{% endif %}{% if skill.featured %} cell--featured{% endif %} hex">
+              {%- if skill.icon %}{% include icons/{{ skill.icon }}.svg %}{% endif %}{{ t.skills[skill.id] }}</span>
             {%- endfor %}
           </div>
           {%- endfor %}
