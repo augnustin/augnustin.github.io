@@ -1,7 +1,7 @@
 /* ==========================================================================
    Resume — "Hexagon logbook"
    Markup: _layouts/resume.html. Shared by / (fr) and /en/ (en).
-   Desktop & print: a single A4 sheet. Below 820px: a fluid, scrolling page.
+   Desktop & print: one A4 page per .sheet. Below 820px: a fluid, scrolling page.
    ========================================================================== */
 
 /* ---------- Tokens ---------- */
@@ -9,37 +9,44 @@
 :root {
   /* Palette */
   --accent: #1e3a5f; /* deep navy: masthead, headings, strong cells */
-  --signal: #d9b26f; /* sand: highlights (portrait frame, current job) */
+  --signal: #d9b26f; /* sand: highlights (portrait frame, AI cell, missions title) */
   --ink: #12161c;
   --ink-soft: #3a3f4a;
   --ink-muted: #5b616e;
   --line: #dce3ec;
   --paper: #f2f3f5;
-  --card: #ffffff;
   --desk: #c9cfd8; /* background around the sheet */
   --on-accent: #ffffff;
-  --on-accent-soft: #dce3ec;
+  --on-accent-muted: #8fa6c4;
   --available: #6fcf97;
 
   /* Type */
-  --font-display: "Bricolage Grotesque", system-ui, sans-serif;
+  --font-display: "Arvo", Georgia, serif;
   --font-body: "Geist", system-ui, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, monospace;
   --font-serif: "Instrument Serif", Georgia, serif;
+  /* Type scale of the document. Exceptions: the name (46px), the role (25px) and the featured cell. */
+  --text-xs: 10.5px; /* dates, durations, stacks, labels, cells */
+  --text-sm: 11.5px; /* tasks, contexts, places, contacts */
+  --text-md: 13px; /* running text, mission and school names */
+  --text-lg: 15px; /* job titles, sub-headings */
+  --text-xl: 22px; /* section titles */
 
   /* Sheet */
   --sheet-w: 210mm;
-  --sheet-h: 297mm;
+  --sheet-h: 297mm; /* one A4 page */
+  --page-top: 10mm; /* top margin of every page but the first (the masthead bleeds to the edge) */
+  --page-bottom: 8mm; /* bottom margin of every page */
   --gutter: 38px;
 
   /* Vertical rhythm */
   --space-section: 25px; /* above each section */
-  --space-title: 12px; /* between a section title and its content */
+  --space-title: 20px; /* between a section title and its content */
 
   /* Honeycomb cell */
   --cell-w: 72px;
   --cell-gap: 4px;
-  --cell-font: 10.5px; /* label size; the featured cell scales with --cell-w instead */
+  --cell-font: var(--text-xs); /* label size; the featured cell scales with --cell-w instead */
 }
 
 /* ---------- Base ---------- */
@@ -58,19 +65,23 @@ body {
   margin: 0;
   background: var(--desk);
   color: var(--ink);
-  font: 400 12.5px/1.5 var(--font-body);
+  font: 400 var(--text-md) / 1.5 var(--font-body);
   -webkit-font-smoothing: antialiased;
 }
 
 h1,
 h2,
 h3,
+h4,
+h5,
 p,
-ul {
+ul,
+ol {
   margin: 0;
 }
 
-ul {
+ul,
+ol {
   padding: 0;
   list-style: none;
 }
@@ -105,7 +116,7 @@ svg {
 }
 
 .eyebrow {
-  font: 500 10px/1 var(--font-mono);
+  font: 500 var(--text-xs) / 1 var(--font-mono);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--accent);
@@ -113,15 +124,17 @@ svg {
 
 .section-title {
   white-space: pre-line; /* a newline in the i18n string forces the line break */
-  font: 800 22px/1 var(--font-display);
+  font: 700 var(--text-xl) / 1 var(--font-display);
   letter-spacing: -0.03em;
 }
 
 /* ---------- Sheet (the A4 page) ---------- */
 
+/* One A4 page. Its padding mirrors the @page margins, so a page holds the same on screen as on paper. */
 .sheet {
   width: var(--sheet-w);
   height: var(--sheet-h);
+  padding-bottom: var(--page-bottom);
   margin: 0 auto 32px;
   overflow: hidden;
   zoom: var(--zoom, 1); /* set by js/zoom.js */
@@ -135,6 +148,10 @@ svg {
 
 .sheet > * {
   flex: none;
+}
+
+.sheet + .sheet {
+  padding-top: var(--page-top);
 }
 
 .section {
@@ -281,13 +298,12 @@ svg {
 
 .identity__name {
   white-space: nowrap;
-  font: 800 46px/0.9 var(--font-display);
-  letter-spacing: -0.045em;
+  font: 700 46px/0.9 var(--font-display);
+  letter-spacing: -0.03em;
 }
 
 .identity__surname {
-  color: transparent;
-  -webkit-text-stroke: 1.5px var(--on-accent);
+  color: var(--on-accent-muted);
 }
 
 .identity__role {
@@ -295,7 +311,7 @@ svg {
   align-items: center;
   gap: 10px;
   margin-top: 16px;
-  font: 500 22px/1.05 var(--font-display);
+  font: 400 25px/1.05 var(--font-display);
   letter-spacing: -0.02em;
 }
 
@@ -307,10 +323,10 @@ svg {
 }
 
 .identity__quote {
-  margin: 8px 0 0 22px;
-  font: italic 400 16px/1.3 var(--font-serif);
+  margin-top: 8px;
+  font: italic 400 var(--text-lg) / 1.3 var(--font-serif);
   letter-spacing: 0.01em;
-  color: var(--on-accent-soft);
+  color: var(--on-accent-muted);
 }
 
 .portrait {
@@ -348,7 +364,7 @@ svg {
   padding: 0 10px;
   border-radius: 999px;
   border: 1px solid rgb(255 255 255 / 0.4);
-  font-size: 11.5px;
+  font-size: var(--text-sm);
 }
 
 .contact--primary {
@@ -367,8 +383,8 @@ svg {
   border-radius: 999px;
   border: 1px solid rgb(255 255 255 / 0.16);
   background: rgb(255 255 255 / 0.08);
-  font-size: 11px;
-  color: var(--on-accent-soft);
+  font-size: var(--text-sm);
+  color: var(--on-accent);
 }
 
 .location__dot {
@@ -394,13 +410,12 @@ svg {
 
 .hive__lead {
   margin-top: var(--space-title);
-  font-size: 13px;
   color: var(--ink-soft);
 }
 
 .hive__stack {
   margin-top: 8px;
-  font: 400 11.5px/1.8 var(--font-mono);
+  font: 400 var(--text-sm) / 1.8 var(--font-mono);
   color: var(--accent);
 }
 
@@ -451,56 +466,44 @@ svg {
 }
 
 .cell--featured {
-  font: 800 calc(var(--cell-w) * 0.3) / 1 var(--font-display);
+  font: 700 calc(var(--cell-w) * 0.3) / 1 var(--font-display);
   letter-spacing: -0.02em;
 }
 
 /* ---------- 02 · Logbook (experience) ---------- */
 
 .logbook {
-  margin: calc(var(--space-title) + 4px) 0 0 6px;
-  border-left: 1px solid var(--accent);
+  margin-top: var(--space-title);
 }
 
 .job {
-  position: relative;
   display: grid;
   grid-template-columns: 84px minmax(0, 1fr);
   gap: 16px;
-  padding: 0 0 13px 26px;
+  padding-bottom: 13px;
+}
+
+/* The current job's missions carried over to the next page: no dates or title, just the list */
+.section--continued {
+  padding-top: 0;
+}
+
+.section--continued .logbook {
+  margin-top: 0;
+}
+
+.job--continued > .missions__list {
+  grid-column: 2;
+  margin-top: 0;
 }
 
 .job:last-child {
   padding-bottom: 2px;
 }
 
-/* Centered on the 1px timeline */
-.job__node {
-  position: absolute;
-  left: -5.5px;
-  top: 10px;
-  width: 10px;
-  height: 11.5px;
-  background: var(--accent);
-}
-
-.job--current .job__node {
-  background: var(--signal);
-}
-
-.job__year {
-  font: 800 38px/0.85 var(--font-display);
-  letter-spacing: -0.04em;
-  color: transparent;
-  -webkit-text-stroke: 1px rgb(30 58 95 / 0.33);
-}
-
-.job--current .job__year {
-  -webkit-text-stroke-color: var(--accent);
-}
-
-.job__title {
-  font-size: 15px;
+.job__title,
+.degree--main .degree__name {
+  font-size: var(--text-lg);
   font-weight: 600;
   letter-spacing: -0.01em;
   line-height: 1.25;
@@ -517,67 +520,129 @@ svg {
   color: var(--ink-soft);
 }
 
-.clients {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 5px;
-  margin-top: 10px;
+.job__points {
+  margin-top: 4px;
 }
 
-.clients__label {
-  margin-right: 4px;
-  color: var(--ink-muted);
+.job__tags {
+  margin-top: 2px;
 }
 
-.chip {
-  display: inline-block; /* so its padding takes room when chips wrap */
-  padding: 2px 9px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--card);
-  font: 500 12px/1.4 var(--font-display);
+/* Long freelance missions, nested under the current job and set apart by a thick bar, on both pages */
+.missions {
+  margin-top: 14px;
+}
+
+.missions,
+.missions__list--continued {
+  padding-left: 14px;
+  border-left: 3px solid var(--signal);
+}
+
+.missions__title {
+  font: 700 var(--text-lg) / 1.2 var(--font-display);
+  letter-spacing: -0.01em;
+  color: var(--signal);
+}
+
+.missions__list {
+  margin-top: 6px;
+}
+
+/* Two columns: client and tasks | duration, level with the client, and stack, level with the tasks */
+.mission {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 150px;
+  gap: 2px 16px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.mission:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.mission__duration {
+  font: 500 var(--text-xs) / 1.75 var(--font-mono);
   color: var(--accent);
+}
+
+.mission__title {
+  font-size: var(--text-md);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.points {
+  font-size: var(--text-sm);
+  line-height: 1.42;
+  color: var(--ink-soft);
+}
+
+.points li {
+  position: relative;
+  padding-left: 11px;
+}
+
+.points li::before {
+  content: "–";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
+.tags {
+  font: 400 var(--text-xs) / 1.5 var(--font-mono);
+  color: var(--ink-muted);
 }
 
 /* ---------- 03 · Training (education) ---------- */
 
-.schools {
+/* Degrees: same columns as the jobs, so the years and the text line up with the logbook's */
+.degrees {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 8px;
+  gap: 12px;
   margin-top: var(--space-title);
 }
 
-/* Name and year share the first line; the degree runs underneath */
-.school {
+.degree {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-content: start;
-  gap: 4px 8px;
-  padding: 11px 13px;
-  border-radius: 12px;
-  background: var(--card);
+  grid-template-columns: 84px minmax(0, 1fr);
+  gap: 16px;
 }
 
-.school__year {
-  grid-area: 1 / 2;
-  font: 400 10.5px/1.75 var(--font-mono);
+.job__years,
+.degree__period {
+  font: 500 var(--text-xs) / 1.75 var(--font-mono);
   color: var(--accent);
 }
 
-.school__name {
-  grid-area: 1 / 1;
-  font-size: 13px;
+.degree__name {
+  font-size: var(--text-md);
   font-weight: 600;
-  line-height: 1.3;
+  line-height: 1.35;
 }
 
-.school__degree {
-  grid-column: 1 / -1;
-  font-size: 11px;
-  line-height: 1.4;
+.job__context,
+.mission__context,
+.degree__place {
+  font: 400 var(--text-sm) / 1 var(--font-body);
+  letter-spacing: 0;
   color: var(--ink-muted);
+}
+
+.degree__desc {
+  margin-top: 2px;
+  font-size: var(--text-sm);
+  line-height: 1.42;
+  color: var(--ink-soft);
+}
+
+.degree--main .degree__desc {
+  margin-top: 4px;
+  font-size: inherit;
+  line-height: inherit;
 }
 
 /* ---------- 04–05 · Languages & off screen ---------- */
@@ -618,13 +683,13 @@ svg {
 }
 
 .language__name {
-  font: 500 16px/1.2 var(--font-display);
+  font: 400 var(--text-lg) / 1.2 var(--font-display);
   letter-spacing: -0.02em;
 }
 
 .language__level {
   white-space: nowrap;
-  font: 400 10.5px/1 var(--font-mono);
+  font: 400 var(--text-xs) / 1 var(--font-mono);
   color: var(--accent);
 }
 
@@ -634,7 +699,7 @@ svg {
 
 .hobbies {
   margin-top: 12px;
-  font: italic 400 24px/1.25 var(--font-serif);
+  font: italic 400 var(--text-xl) / 1.25 var(--font-serif);
   color: #2a3240;
 }
 
@@ -644,7 +709,6 @@ svg {
   :root {
     --gutter: 16px;
     --space-section: 40px;
-    --space-title: 16px;
     --cell-w: 92px;
     --cell-gap: 6px;
     --cell-font: 12px;
@@ -655,10 +719,12 @@ svg {
     font-size: 15px;
   }
 
-  .sheet {
+  .sheet,
+  .sheet + .sheet {
     width: auto;
     height: auto;
     margin: 0;
+    padding: 0;
     overflow: visible;
     box-shadow: none;
     zoom: 1;
@@ -718,7 +784,6 @@ svg {
   }
 
   .identity__quote {
-    margin-left: 0;
     font-size: 20px;
   }
 
@@ -762,38 +827,79 @@ svg {
     padding-bottom: 28px;
   }
 
-  .job__node {
-    top: 4px;
-  }
-
   .job__title {
     font-size: 18px;
   }
 
-  /* Chips wrap over several lines here: give the lines room */
-  .clients {
-    gap: 10px 8px;
-    margin-top: 14px;
+  /* Stacked: client, duration, tasks, stack */
+  .mission {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+    padding: 14px 0;
   }
 
-  .chip {
-    font-size: 15px;
-    padding: 6px 12px;
+  .mission__duration {
+    font-size: 13px;
   }
 
-  .schools {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  /* The pages join: no gap in the bar, and a line between the last mission of page 1 and the first of page 2 */
+  .job--current:not(.job--continued) {
+    padding-bottom: 0;
   }
 
-  .school__name {
+  .missions__list--continued {
+    border-top: 1px solid var(--line);
+  }
+
+  .job--continued > .missions__list {
+    grid-column: auto;
+  }
+
+  .missions__title {
+    font-size: 18px;
+  }
+
+  .mission__title {
     font-size: 16px;
   }
 
-  .school__degree {
+  .points {
     font-size: 14px;
   }
 
-  .school__year,
+  .tags {
+    font-size: 12px;
+  }
+
+  .degrees {
+    gap: 20px;
+  }
+
+  .degree {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 6px;
+  }
+
+  .degree__name {
+    font-size: 16px;
+  }
+
+  .degree__desc {
+    font-size: 14px;
+  }
+
+  .degree--main .degree__name {
+    font-size: 18px;
+  }
+
+  .job__context,
+  .mission__context,
+  .degree__place {
+    font-size: 14px;
+  }
+
+  .job__years,
+  .degree__period,
   .language__level {
     font-size: 13px;
   }
@@ -820,29 +926,52 @@ svg {
     --cell-font: 11px;
   }
 
-  .schools {
-    grid-template-columns: minmax(0, 1fr);
+  /* Keeps the role and its two hexagons on one line */
+  .identity__role {
+    gap: 8px;
+    font-size: 21px;
   }
 }
 
-/* ---------- Print: exactly one A4 page ---------- */
+/* ---------- Print: one A4 page per .sheet ---------- */
 
+/* Page 1 bleeds to the top edge (navy masthead); later pages get a top margin so content doesn't
+   start flush with the edge. Every page keeps a bottom margin. */
 @page {
   size: A4;
-  margin: 0;
+  margin: 10mm 0 8mm; /* --page-top, --page-bottom: custom properties don't apply in @page */
+}
+
+@page :first {
+  margin-top: 0;
 }
 
 @media print {
+  /* White paper: page margins print white anyway */
+  :root {
+    --paper: #ffffff;
+  }
+
   body {
-    background: none;
+    background: var(--paper);
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
 
-  .sheet {
+  /* Each sheet is a printed page: the @page margins replace its padding */
+  .sheet,
+  .sheet + .sheet {
+    display: block;
+    height: auto;
     margin: 0;
+    padding: 0;
+    overflow: visible;
     box-shadow: none;
     zoom: 1;
+  }
+
+  .sheet + .sheet {
+    break-before: page;
   }
 
   .no-print {

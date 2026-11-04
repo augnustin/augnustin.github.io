@@ -1,0 +1,17 @@
+{%- comment -%} One mission of the current job. Params: mission (from profile.yml). {%- endcomment -%}
+{%- assign tm = t.missions[include.mission.id] %}
+<li class="mission">
+  <h5 class="mission__title">
+    {%- assign org = tm.org | default: include.mission.org %}
+    {%- if include.mission.url %}<a class="mission__org" href="{{ include.mission.url }}">{{ org }}</a>
+    {%- else %}<span class="mission__org">{{ org }}</span>{% endif %}
+    <span class="mission__context">— {{ tm.context }}</span>
+  </h5>
+  <p class="mission__duration">{% include duration.html duration=include.mission.duration units=t.durations %}</p>
+  <ul class="points">
+    {%- for point in tm.points %}
+    <li>{{ point }}</li>
+    {%- endfor %}
+  </ul>
+  <p class="tags">{{ tm.tags | default: include.mission.tags | join: ' · ' }}</p>
+</li>

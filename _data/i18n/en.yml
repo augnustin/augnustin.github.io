@@ -19,7 +19,7 @@ identity:
   location: Montpellier, France
 
 hive:
-  title: Every cell of a product.
+  title: Every cell of a product
   lead: >-
     A fullstack product engineer: I can develop, but also lead and mentor teams of humans or AI agents.
 
@@ -33,43 +33,123 @@ skills:
   team: Team
 
 logbook:
-  title: Professional Experience.
-  clients: Main clients
+  title: Professional Experience
+  missions: Main missions
 
+# Mission durations: singular and plural units
+durations:
+  month: month
+  months: months
+  year: year
+  years: years
+
+# Optional `context` follows the organisation's name; `description` and/or `points` (bullets).
 jobs:
   freelance:
-    year: Now
-    title: Freelance web developer
+    end: Now
+    title: Freelance
     description: >-
       Multiple missions as fullstack, lead, frontend or backend developer. Contributed to several open-source
       projects along the way.
   lewagon:
     title: Ruby on Rails teacher
-    description: >-
-      Taught two-month bootcamps for entrepreneurs, with a focus on best practices in Rails and front-end
-      development.
+    context: coding bootcamps
+    points:
+      - Two-month training sessions for entrepreneurs
+      - Taught programming with Ruby on Rails and JavaScript
+      - Lectures, hands-on labs and project presentations
   copass:
     title: CTO & co-founder
-    description: >-
-      Entrepreneurship experience: built a complete marketplace of coworking spaces with Ruby on Rails, Postgres
-      and React. Managed a tech team of three.
+    context: one subscription to a worldwide network of coworking spaces
+    points:
+      - Built a marketplace aggregating over 500 spaces
+      - User profiles, payments, third-party payment collection, geographic search, messaging, notifications, SEO
+      - Recruited and led a tech team of three
   talan:
     title: IT consultant
-    description: >-
-      Large agile project restructuring the information system of the French national railway company.
+    points:
+      - Agile restructuring of the information system of a major French railway company
+      - Wrote specifications
+      - Ran scoping meetings
+      - User testing
+      - On-site deployment support
+
+# One entry per mission id of _data/profile.yml: `context` follows the organisation's name, `points` are
+# the bullet points, optional `org` and `tags` replace those of profile.yml.
+missions:
+  harnessers:
+    context: technical support for AI projects
+    points:
+      - Codebase reviews, security flaw detection, software architecture advice
+      - Harness engineering, agentic development
+      - MCP server development
+  butter:
+    context: Web3 prediction markets
+    points:
+      - Front-end development of a platform for decentralized decision-making
+      - Wallet connection and trading screens on the blockchain
+  ecologistes:
+    org: Political party
+    context: 2024 European election campaign
+    points:
+      - Led the technical development of the campaign website
+      - Built the donation platform
+      - Coordinated with the communication team on campaign launches
+  granular:
+    context: energy transition
+    points:
+      - Built the front-end of a web app tracking renewable energy production
+      - Visualized the gaps between renewable energy production and consumption, hour by hour
+      - Recruited and managed the permanent team (3 people)
+  rubix:
+    context: industrial IoT, in Toulouse
+    points:
+      - "Built the front-end of dashboards for sensor data: pressure, temperature, atmosphere"
+      - Real-time charts and alert thresholds per device
+  francevae:
+    context: beta.gouv state startup (formerly Avril, REVA)
+    points:
+      - Streamlined the administrative process of obtaining a VAE (accreditation of prior experience) for job seekers
+      - Improved, optimized and maintained the one-stop-shop application
+      - UX and accessibility work following public-service standards
+      - Set up continuous deployment, CI/CD and security audits
+  passculture:
+    context: beta.gouv state startup
+    points:
+      - Built the Pass Culture mobile app
+      - Offer discovery and booking screens
+  candyvoice:
+    context: digital voice processing
+    points:
+      - Built the infrastructure for recording voices and generating voice models
+      - Mobile recorder app
+      - New version of the company website
+  pulpix:
+    context: smart video player, incubated at Y Combinator
+    points:
+      - Wrote the test suite of a library wrapping several video players
+      - Automated runs in headless Chrome
+  mojjo:
+    context: tennis video analysis
+    points:
+      - Built an Angular web app on top of a match-analysis algorithm
+      - Match statistics and filtered replays
+      - Presented at Roland-Garros 2015
 
 training:
-  title: Engineer by training.
+  title: Engineer by training
 
+# `place` (optional) follows the school's name.
 schools:
   telecom:
-    degree: Master of Engineering, Telecommunication
-  eurecom:
     degree: Master of Engineering, Telecommunication, Multimedia track
+    place: Paris & Sophia Antipolis, France
   uq:
-    degree: Master of Information Technology (exchange)
+    degree: University exchange, Master of Information Technology
+    place: Brisbane, Australia
   hoche:
-    degree: Classes préparatoires MPSI-MP*, Versailles
+    degree: Classes préparatoires MPSI-MP*
+    place: Versailles, France
 
 languages:
   title: Languages

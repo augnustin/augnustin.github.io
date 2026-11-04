@@ -19,7 +19,7 @@ identity:
   location: Montpellier, France
 
 hive:
-  title: Ingénieur produit de bout en bout.
+  title: Ingénieur produit de bout en bout
   lead: >-
     J'assure la mise en œuvre technique de vos projets, du serveur à l'interface, par le développement, l'encadrement d'une équipe ou d'agents IA.
 
@@ -33,45 +33,125 @@ skills:
   team: Équipe
 
 logbook:
-  title: Expérience professionnelle.
-  clients: Principaux clients
+  title: Expérience professionnelle
+  missions: Principales missions
 
+# Durées des missions : unités au singulier et au pluriel
+durations:
+  month: mois
+  months: mois
+  year: an
+  years: ans
+
+# `context` (facultatif) suit le nom de l'organisation ; `description` et/ou `points` (puces).
 jobs:
   freelance:
-    year: Auj.
-    title: Développeur web freelance
+    end: Auj.
+    title: Freelance
     description: >-
       Réalisation de nombreuses missions, en tant que développeur fullstack, lead, frontend ou backend.
       Participation à plusieurs projets open source.
   lewagon:
     title: Formateur Ruby on Rails
-    description: >-
-      Sessions de formation de 2 mois pour entrepreneurs. Enseignement des bonnes pratiques en Rails et en
-      développement front-end.
+    context: bootcamps de code
+    points:
+      - Sessions de formation de 2 mois pour entrepreneurs
+      - Enseignement de la programmation avec Ruby on Rails et JavaScript
+      - Cours magistraux, travaux pratiques et présentation de projets
   copass:
     title: CTO & cofondateur
-    description: >-
-      Expérience entrepreneuriale : mise en œuvre d'une marketplace du coworking avec Ruby on Rails, Postgres et
-      React. Direction d'une équipe technique de 3 personnes.
+    context: abonnement unique à un réseau mondial d'espaces de coworking
+    points:
+      - Développement d'une marketplace agrégeant plus de 500 espaces
+      - Profils utilisateurs, paiement, encaissement pour un tiers, recherche géographique, messagerie, notifications, SEO
+      - Recrutement & direction d'une équipe technique de 3 personnes
   talan:
     title: Consultant SI
-    description: >-
-      Large projet en développement agile de restructuration du système d'information d'une grande compagnie
-      ferroviaire française.
+    points:
+      - Restructuration agile du système d'information d'une grande compagnie ferroviaire française
+      - Rédaction de spécifications
+      - Animation de réunions de cadrage
+      - Tests utilisateurs
+      - Support au déploiement sur site
+
+# Une entrée par id de mission de _data/profile.yml : `context` suit le nom de l'organisation, `points` sont
+# les puces, `org` et `tags` (facultatifs) remplacent ceux de profile.yml.
+missions:
+  harnessers:
+    context: accompagnement technique de projets IA
+    points:
+      - Revues de code, détection de failles de sécurité, conseils en architecture logicielle
+      - Harness engineering, développements agentiques
+      - Développement de serveur MCP
+  butter:
+    context: marchés prédictifs Web3
+    points:
+      - Développement front-end d'une plateforme de prise de décision décentralisée
+      - Connexion de wallet et écrans de trading sur la blockchain
+  ecologistes:
+    org: Parti politique
+    context: campagne des élections européennes 2024
+    points:
+      - Direction du développement technique du site de campagne
+      - Réalisation de la plateforme de dons
+      - Coordination avec l'équipe communication pour les lancements de campagne
+  granular:
+    context: transition énergétique
+    points:
+      - Développement du front-end d'une application web de suivi de la production d'énergie renouvelable
+      - Visualisation des écarts entre production et consommation d'énergie renouvelable heure par heure
+      - Recrutement et encadrement de l'équipe en poste fixe (3 personnes)
+  rubix:
+    context: IoT industriel, à Toulouse
+    points:
+      - "Front-end de tableaux de bord de données capteurs : pression, température, atmosphère"
+      - Graphiques temps réel et seuils d'alerte par appareil
+  francevae:
+    context: startup d'État beta.gouv (anciennement Avril, REVA)
+    points:
+      - Fluidification des démarches administratives pour l'obtention d'une VAE pour les demandeurs d'emploi
+      - Amélioration, optimisation et maintenance de l'application de guichet unique
+      - Travail d'UX et d'accessibilité appliqué selon les standards du service public
+      - Mise en place du déploiement continu, CI/CD, audits de sécurité
+  passculture:
+    context: startup d'État beta.gouv
+    points:
+      - Développement de l'application mobile du Pass Culture
+      - Écrans de découverte et de réservation des offres
+  candyvoice:
+    context: traitement numérique de la voix
+    points:
+      - Infrastructure d'enregistrement de voix et de génération de modèles vocaux
+      - Application mobile d'enregistrement
+      - Nouvelle version du site de l'entreprise
+  pulpix:
+    context: lecteur vidéo intelligent, incubée au Y Combinator
+    points:
+      - Suite de tests d'une bibliothèque encapsulant plusieurs lecteurs vidéo
+      - Exécution automatisée dans Chrome headless
+    tags: [JavaScript, Chrome headless]
+  mojjo:
+    context: analyse vidéo du tennis
+    points:
+      - Application web Angular s'appuyant sur un algorithme d'analyse de matchs
+      - Statistiques de match et ralentis filtrés
+      - Présentation à Roland-Garros 2015
 
 training:
-  title: Une formation d'ingénieur reconnue.
+  title: Une formation d'ingénieur reconnue
 
+# `place` (facultatif) suit le nom de l'établissement.
 schools:
   telecom:
-    degree: Diplôme d'ingénieur en télécommunication
-  eurecom:
     degree: Diplôme d'ingénieur en télécommunication, filière multimédia
+    place: Paris & Sophia Antipolis, France
   uq:
     name: Université du Queensland
-    degree: Master des technologies de l'information
+    degree: Échange universitaire, master des technologies de l'information
+    place: Brisbane, Australie
   hoche:
-    degree: Classes préparatoires MPSI-MP*, Versailles
+    degree: Classes préparatoires MPSI-MP*
+    place: Versailles, France
 
 languages:
   title: Langues

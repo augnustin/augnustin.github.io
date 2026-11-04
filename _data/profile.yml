@@ -36,25 +36,78 @@ skills:
   - - { id: product, tone: strong }
     - { id: team }
 
-clients:
-  - { name: beta.gouv, url: "https://beta.gouv.fr" }
-  - { name: Granular Energy, url: "https://www.granular-energy.com" }
-  - { name: les Écologistes, url: "https://ecologie2024.eu" }
-  - { name: Butter, url: "https://app.butter.markets" }
-  - { name: Rubix, url: "https://fr.rubix.com" }
-
-# Most recent first. `current` highlights the entry and shows the clients.
+# Most recent first. `current` highlights the entry and lists the missions under it.
+# `years`: [start, end], or [start] for an ongoing job (i18n `jobs.<id>.end` then gives its end, e.g. "Now").
 jobs:
-  - { id: freelance, current: true }
-  - { id: lewagon, year: 2015, org: Le Wagon, url: "https://www.lewagon.com/" }
-  - { id: copass, year: 2014, org: Copass, url: "https://copass.org" }
-  - { id: talan, year: 2012, org: Talan Consulting, url: "https://consulting.talan.com" }
+  - { id: freelance, current: true, years: [2015] }
+  - { id: lewagon, years: [2014], org: Le Wagon, url: "https://www.lewagon.com/" }
+  - id: copass
+    years: [2013, 2015]
+    org: Copass
+    url: "https://copass.org"
+    tags: [Ruby on Rails, React, Postgres, Mangopay, AWS, Mapbox]
+  - { id: talan, years: [2010, 2012], org: Talan Consulting, url: "https://consulting.talan.com" }
 
+# Long freelance missions, listed under the current job. Most recent end date first.
+# duration: { months: N } or { years: N }. org: i18n `missions.<id>.org` overrides it per language.
+# tags: the stack; i18n `missions.<id>.tags` overrides it per language.
+# Wording (context line and bullet points) lives in _data/i18n/<lang>.yml under `missions.<id>`.
+missions:
+  - id: harnessers
+    org: Harnessers
+    url: "https://harnessers.dev"
+    duration: { months: 6 }
+    tags: [Claude Code, Codex, OpenCode, MCP]
+  - id: butter
+    org: Butter
+    url: "https://app.butter.markets"
+    duration: { months: 8 }
+    tags: [Web3, React, TypeScript]
+  - id: francevae
+    org: France VAE
+    duration: { years: 5 }
+    tags: [Elixir, Nuxt / Vue, TypeScript, Node.js, GraphQL, Postgres GeoJSON & full text search]
+  - id: ecologistes
+    org: Les Écologistes
+    duration: { months: 6 }
+    tags: [Citipo, VanillaJS, Ruby, React, GoGoCarto]
+  - id: granular
+    org: Granular Energy
+    url: "https://www.granular-energy.com"
+    duration: { years: 1 }
+    tags: [Vue.js, Vuetify, Highcharts]
+  - id: rubix
+    org: Rubix
+    url: "https://fr.rubix.com"
+    duration: { months: 4 }
+    tags: [React, Redux, D3.js]
+  - id: passculture
+    org: Pass Culture
+    duration: { years: 1 }
+    tags: [React, Ionic]
+  - id: candyvoice
+    org: CandyVoice
+    duration: { months: 4 }
+    tags: [Node.js, Angular.js, PostgreSQL, AWS]
+  - id: pulpix
+    org: Pulpix
+    duration: { months: 6 }
+    tags: [JavaScript, headless Chrome]
+  - id: mojjo
+    org: Mojjo
+    url: "https://mojjo.fr"
+    duration: { months: 12 }
+    tags: [Angular.js, PostgreSQL, AWS]
+
+# The resume is two A4 pages, on screen as in print: page 2 starts with this mission.
+page_break: rubix
+
+# Most recent first. `main`: listed large; the others are smaller, on the same columns.
+# `years`: [start, end], or [year] for a single year.
 schools:
-  - { id: telecom, year: 2010, name: Télécom Paris }
-  - { id: eurecom, year: 2009, name: EURECOM }
-  - { id: uq, year: 2008, name: University of Queensland }
-  - { id: hoche, year: 2005, name: Lycée Hoche }
+  - { id: telecom, main: true, years: [2007, 2010], name: Télécom Paris }
+  - { id: uq, years: [2009], name: University of Queensland }
+  - { id: hoche, years: [2005, 2007], name: Lycée Hoche }
 
 # `level`: key into `levels` of the i18n file.
 spoken:

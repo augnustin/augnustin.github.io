@@ -17,7 +17,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap"
     />
     <link rel="stylesheet" href="{{ '/css/resume.css' | relative_url }}" />
     <script src="{{ '/js/zoom.js' | relative_url }}" defer></script>
@@ -42,131 +42,183 @@
       <a class="toolbar__pdf" href="{{ t.toolbar.pdf | relative_url }}" download>{% include icons/download.svg %} PDF</a>
     </nav>
 
-    <main class="sheet">
-      <header class="masthead">
-        {% include icons/honeycomb.svg %}
+    <main class="document">
+      <div class="sheet">
+        <header class="masthead">
+          {% include icons/honeycomb.svg %}
 
-        <div class="masthead__grid">
-          <div class="masthead__main">
-            <h1 class="identity__name">
-              {{ p.first_name }} <span class="identity__surname">{{ p.last_name }}</span>
-            </h1>
-            <p class="identity__role"><span class="identity__bullet hex"></span>{{ t.identity.role }}</p>
-            <p class="identity__quote">{{ t.identity.quote }}</p>
+          <div class="masthead__grid">
+            <div class="masthead__main">
+              <h1 class="identity__name">
+                {{ p.first_name }} <span class="identity__surname">{{ p.last_name }}</span>
+              </h1>
+              <p class="identity__role">
+                <span class="identity__bullet hex"></span>{{ t.identity.role }}<span class="identity__bullet hex"></span>
+              </p>
+              <p class="identity__quote">{{ t.identity.quote }}</p>
 
-            <div class="contacts">
-              <ul class="contacts__row">
-                <li>
-                  <a class="contact contact--primary" href="mailto:{{ p.email }}">
-                    {% include icons/mail.svg %} {{ p.email }}
-                  </a>
-                </li>
-                <li>
-                  <a class="contact contact--primary" href="tel:{{ p.phone.number }}">
-                    {% include icons/phone.svg %} {{ p.phone.label }}
-                  </a>
-                </li>
-              </ul>
-              <ul class="contacts__row">
-                {%- for link in p.links %}
-                <li><a class="contact" href="{{ link.url }}">{{ link.label }} ↗</a></li>
-                {%- endfor %}
-              </ul>
+              <div class="contacts">
+                <ul class="contacts__row">
+                  <li>
+                    <a class="contact contact--primary" href="mailto:{{ p.email }}">
+                      {% include icons/mail.svg %} {{ p.email }}
+                    </a>
+                  </li>
+                  <li>
+                    <a class="contact contact--primary" href="tel:{{ p.phone.number }}">
+                      {% include icons/phone.svg %} {{ p.phone.label }}
+                    </a>
+                  </li>
+                </ul>
+                <ul class="contacts__row">
+                  {%- for link in p.links %}
+                  <li><a class="contact" href="{{ link.url }}">{{ link.label }} {% include icons/arrow-up-right.svg %}</a></li>
+                  {%- endfor %}
+                </ul>
+              </div>
+            </div>
+
+
+            <div class="masthead__aside">
+              <div class="portrait hex">
+                <img class="hex" src="{{ p.portrait | relative_url }}" alt="{{ t.identity.portrait_alt | escape }}" width="640" height="640" />
+              </div>
+              <p class="location"><span class="location__dot"></span>{{ t.identity.location }}</p>
             </div>
           </div>
+        </header>
 
-
-          <div class="masthead__aside">
-            <div class="portrait hex">
-              <img class="hex" src="{{ p.portrait | relative_url }}" alt="{{ t.identity.portrait_alt | escape }}" width="640" height="640" />
-            </div>
-            <p class="location"><span class="location__dot"></span>{{ t.identity.location }}</p>
+        <section class="section hive" aria-labelledby="hive-title">
+          <div class="hive__text">
+            <h2 class="section-title" id="hive-title">{{ t.hive.title }}</h2>
+            <p class="hive__lead">{{ t.hive.lead }}</p>
+            <p class="hive__stack">
+              {%- for line in p.stack %}{{ line | join: ' · ' }}{% unless forloop.last %}<br />{% endunless %}{% endfor -%}
+            </p>
           </div>
-        </div>
-      </header>
 
-      <section class="section hive" aria-labelledby="hive-title">
-        <div class="hive__text">
-          <h2 class="section-title" id="hive-title">{{ t.hive.title }}</h2>
-          <p class="hive__lead">{{ t.hive.lead }}</p>
-          <p class="hive__stack">
-            {%- for line in p.stack %}{{ line | join: ' · ' }}{% unless forloop.last %}<br />{% endunless %}{% endfor -%}
-          </p>
-        </div>
-
-        <div class="comb">
-          {%- for row in p.skills %}
-          <div class="comb__row">
-            {%- for skill in row %}
-            <span class="cell{% if skill.tone %} cell--{{ skill.tone }}{% endif %}{% if skill.featured %} cell--featured{% endif %} hex">
-              {%- if skill.icon %}{% include icons/{{ skill.icon }}.svg %}{% endif %}{{ t.skills[skill.id] }}</span>
+          <div class="comb">
+            {%- for row in p.skills %}
+            <div class="comb__row">
+              {%- for skill in row %}
+              <span class="cell{% if skill.tone %} cell--{{ skill.tone }}{% endif %}{% if skill.featured %} cell--featured{% endif %} hex">
+                {%- if skill.icon %}{% include icons/{{ skill.icon }}.svg %}{% endif %}{{ t.skills[skill.id] }}</span>
+              {%- endfor %}
+            </div>
             {%- endfor %}
           </div>
-          {%- endfor %}
-        </div>
-      </section>
+        </section>
 
-      <section class="section" aria-labelledby="logbook-title">
-        <h2 class="section-title" id="logbook-title">{{ t.logbook.title }}</h2>
+        <section class="section" aria-labelledby="logbook-title">
+          <h2 class="section-title" id="logbook-title">{{ t.logbook.title }}</h2>
 
-        <div class="logbook">
-          {%- for job in p.jobs %}
-          {%- assign tj = t.jobs[job.id] %}
-          <article class="job{% if job.current %} job--current{% endif %}">
-            <span class="job__node hex"></span>
-            <p class="job__year">{{ tj.year | default: job.year }}</p>
-            <div>
-              <h3 class="job__title">
-                {{ tj.title }}{% if job.org %} <a class="job__org" href="{{ job.url }}">— {{ job.org }}</a>{% endif %}
-              </h3>
-              <p class="job__desc">{{ tj.description }}</p>
-              {%- if job.current %}
-              <ul class="clients">
-                <li class="clients__label eyebrow">{{ t.logbook.clients }}</li>
-                {%- for client in p.clients %}
-                <li><a class="chip" href="{{ client.url }}">{{ client.name }}</a></li>
+          <div class="logbook">
+            {%- for job in p.jobs %}{% if job.current %}
+            {%- assign tj = t.jobs[job.id] %}
+            <article class="job job--current">
+              <p class="job__years">{{ job.years | join: ' - ' }}{% if tj.end %} - {{ tj.end }}{% endif %}</p>
+              <div>
+                <h3 class="job__title">
+                  {{ tj.title }}
+                  </h3>
+                <p class="job__desc">{{ tj.description }}</p>
+                <section class="missions" aria-labelledby="missions-title">
+                  <h4 class="missions__title" id="missions-title">{{ t.logbook.missions }}</h4>
+                  <ol class="missions__list">
+                    {%- for mission in p.missions %}
+                    {%- if mission.id == p.page_break %}{% break %}{% endif %}
+                    {% include mission.html mission=mission %}
+                    {%- endfor %}
+                  </ol>
+                </section>
+              </div>
+            </article>
+            {%- endif %}{% endfor %}
+          </div>
+        </section>
+      </div>
+
+      <div class="sheet">
+        <section class="section section--continued">
+          <div class="logbook">
+            <div class="job job--current job--continued">
+              <ol class="missions__list missions__list--continued">
+                {%- assign after_break = false %}
+                {%- for mission in p.missions %}
+                {%- if mission.id == p.page_break %}{% assign after_break = true %}{% endif %}
+                {%- if after_break %}
+                {% include mission.html mission=mission %}
+                {%- endif %}
                 {%- endfor %}
-              </ul>
-              {%- endif %}
+              </ol>
             </div>
-          </article>
-          {%- endfor %}
-        </div>
-      </section>
+            {%- for job in p.jobs %}{% unless job.current %}
+            {%- assign tj = t.jobs[job.id] %}
+            <article class="job">
+              <p class="job__years">{{ job.years | join: ' - ' }}{% if tj.end %} - {{ tj.end }}{% endif %}</p>
+              <div>
+                <h3 class="job__title">
+                  {{ tj.title }} <a class="job__org" href="{{ job.url }}">— {{ job.org }}</a>
+                  {%- if tj.context %} <span class="job__context">— {{ tj.context }}</span>{% endif %}
+                </h3>
+                {%- if tj.description %}
+                <p class="job__desc">{{ tj.description }}</p>
+                {%- endif %}
+                {%- if tj.points %}
+                <ul class="points job__points">
+                  {%- for point in tj.points %}
+                  <li>{{ point }}</li>
+                  {%- endfor %}
+                </ul>
+                {%- endif %}
+                {%- if job.tags %}
+                <p class="tags job__tags">{{ job.tags | join: ' · ' }}</p>
+                {%- endif %}
+              </div>
+            </article>
+            {%- endunless %}{% endfor %}
+          </div>
+        </section>
 
-      <section class="section" aria-labelledby="training-title">
-        <h2 class="section-title" id="training-title">{{ t.training.title }}</h2>
+        <section class="section" aria-labelledby="training-title">
+          <h2 class="section-title" id="training-title">{{ t.training.title }}</h2>
 
-        <ul class="schools">
-          {%- for school in p.schools %}
-          {%- assign ts = t.schools[school.id] %}
-          <li class="school">
-            <span class="school__year">{{ school.year }}</span>
-            <span class="school__name">{{ ts.name | default: school.name }}</span>
-            <span class="school__degree">{{ ts.degree }}</span>
-          </li>
-          {%- endfor %}
-        </ul>
-      </section>
-
-      <footer class="closing">
-        <section class="closing__col closing__col--wide" aria-labelledby="languages-title">
-          <h2 class="eyebrow" id="languages-title">{{ t.languages.title }}</h2>
-          <ul class="languages">
-            {%- for spoken in p.spoken %}
-            <li class="language">
-              <span class="language__name">{{ t.spoken[spoken.id] }}</span>
-              <span class="language__level language__level--{{ spoken.level }}">{{ t.levels[spoken.level] }}</span>
+          <ol class="degrees">
+            {%- for school in p.schools %}
+            {%- assign ts = t.schools[school.id] %}
+            <li class="degree{% if school.main %} degree--main{% endif %}">
+              <p class="degree__period">{{ school.years | join: ' - ' }}</p>
+              <div>
+                <h3 class="degree__name">
+                  {{ ts.name | default: school.name }}
+                  {%- if ts.place %} <span class="degree__place">— {{ ts.place }}</span>{% endif %}
+                </h3>
+                <p class="degree__desc">{{ ts.degree }}</p>
+              </div>
             </li>
             {%- endfor %}
-          </ul>
+          </ol>
         </section>
 
-        <section class="closing__col" aria-labelledby="hobbies-title">
-          <h2 class="eyebrow" id="hobbies-title">{{ t.hobbies.title }}</h2>
-          <p class="hobbies">{{ t.hobbies.text }}</p>
-        </section>
-      </footer>
+        <footer class="closing">
+          <section class="closing__col closing__col--wide" aria-labelledby="languages-title">
+            <h2 class="eyebrow" id="languages-title">{{ t.languages.title }}</h2>
+            <ul class="languages">
+              {%- for spoken in p.spoken %}
+              <li class="language">
+                <span class="language__name">{{ t.spoken[spoken.id] }}</span>
+                <span class="language__level language__level--{{ spoken.level }}">{{ t.levels[spoken.level] }}</span>
+              </li>
+              {%- endfor %}
+            </ul>
+          </section>
+
+          <section class="closing__col" aria-labelledby="hobbies-title">
+            <h2 class="eyebrow" id="hobbies-title">{{ t.hobbies.title }}</h2>
+            <p class="hobbies">{{ t.hobbies.text }}</p>
+          </section>
+        </footer>
+      </div>
     </main>
   </body>
 </html>

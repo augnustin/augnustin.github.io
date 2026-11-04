@@ -1,0 +1,12 @@
+{%- comment -%}
+  "6 months", "1 month", "5 years"… in the page's language.
+  include.duration: { months: N } or { years: N }; include.units: the i18n `durations` map.
+{%- endcomment -%}
+{%- if include.duration.years -%}
+  {%- assign n = include.duration.years -%}
+  {%- if n == 1 %}{% assign unit = include.units.year %}{% else %}{% assign unit = include.units.years %}{% endif -%}
+{%- else -%}
+  {%- assign n = include.duration.months -%}
+  {%- if n == 1 %}{% assign unit = include.units.month %}{% else %}{% assign unit = include.units.months %}{% endif -%}
+{%- endif -%}
+{{ n }} {{ unit }}

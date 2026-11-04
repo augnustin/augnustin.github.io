@@ -4,8 +4,8 @@
 #   CV-Augustin-Riedinger-English.pdf ← /en/
 # Builds the site into a temporary folder (so a running `jekyll serve`, which rebuilds _site whenever
 # a PDF is written, can't interfere), serves it on a local port, checks the content fits the A4 sheet
-# (the sheet clips overflow silently, so a clipped page would still print as one page), prints each page
-# with headless Chrome, and fails if a PDF is not exactly one page.
+# (each page is a .sheet that clips overflow silently, so clipped content would never show up in the page
+# count), prints each page with headless Chrome, and fails if a PDF doesn't have one page per .sheet.
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -23,17 +23,21 @@ SERVER=$!
 trap 'kill $SERVER 2>/dev/null; rm -r "$WORK"' EXIT
 sleep 1
 
-# Loads ?page=… in a same-origin iframe and reports, in the document title, the space left under the
-# last block of the sheet (negative = clipped). Measured once the web fonts are in, as they change wrapping.
+# Loads ?page=… in a same-origin iframe and reports, in the document title, the number of sheets and the
+# smallest space left under the last block of a sheet (negative = clipped). Measured once the web fonts are
+# in, as they change wrapping.
 cat >"$SITE/__fit.html" <<'HTML'
 <iframe id="page" style="width:1000px;height:1300px"></iframe>
 <script>
   page.src = new URLSearchParams(location.search).get("page");
   page.onload = () =>
     page.contentDocument.fonts.ready.then(() => {
-      const sheet = page.contentDocument.querySelector(".sheet");
-      const spare = sheet.getBoundingClientRect().bottom - sheet.lastElementChild.getBoundingClientRect().bottom;
-      document.title = "spare=" + Math.floor(spare);
+      const sheets = [...page.contentDocument.querySelectorAll(".sheet")];
+      const spares = sheets.map((sheet) => {
+        const bottom = sheet.getBoundingClientRect().bottom - parseFloat(getComputedStyle(sheet).paddingBottom);
+        return bottom - sheet.lastElementChild.getBoundingClientRect().bottom;
+      });
+      document.title = "sheets=" + sheets.length + " spare=" + Math.floor(Math.min(...spares));
     });
 </script>
 HTML
@@ -43,23 +47,24 @@ chrome() { # headless Chrome with a fresh profile each run, so runs don't collid
 }
 
 print() { # <path> <output>
-  spare=$(chrome --virtual-time-budget=10000 --dump-dom "http://localhost:$PORT/__fit.html?page=$1" |
-    sed -n 's/.*<title>spare=\(-\{0,1\}[0-9]*\)<\/title>.*/\1/p')
+  fit=$(chrome --virtual-time-budget=10000 --dump-dom "http://localhost:$PORT/__fit.html?page=$1")
+  sheets=$(echo "$fit" | sed -n 's/.*<title>sheets=\([0-9]*\) .*/\1/p')
+  spare=$(echo "$fit" | sed -n 's/.*<title>sheets=[0-9]* spare=\(-\{0,1\}[0-9]*\)<\/title>.*/\1/p')
   if [ -z "$spare" ]; then
     echo "✗ $1: couldn't measure the page (is Chrome working?)" >&2
     exit 1
   elif [ "$spare" -lt 0 ]; then
-    echo "✗ $1 overflows the A4 sheet by ${spare#-}px: trim content or spacing" >&2
+    echo "✗ $1: a page overflows its A4 sheet by ${spare#-}px: trim content or spacing, or move page_break" >&2
     exit 1
   fi
 
   chrome --no-pdf-header-footer --virtual-time-budget=6000 --print-to-pdf="$2" "http://localhost:$PORT$1"
   pages=$(pdfinfo "$2" | awk '/^Pages:/ {print $2}')
-  if [ "$pages" != 1 ]; then
-    echo "✗ $2 has $pages pages" >&2
+  if [ "$pages" != "$sheets" ]; then
+    echo "✗ $2 has $pages pages, expected $sheets (one per .sheet)" >&2
     exit 1
   fi
-  echo "✓ $2 (${spare}px left at the bottom)"
+  echo "✓ $2: $pages pages, ${spare}px left at the bottom of the fullest"
 }
 
 print / CV-Augustin-Riedinger-French.pdf
