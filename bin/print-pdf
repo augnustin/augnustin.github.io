@@ -6,6 +6,7 @@
 # a PDF is written, can't interfere), serves it on a local port, checks the content fits the A4 sheet
 # (each page is a .sheet that clips overflow silently, so clipped content would never show up in the page
 # count), prints each page with headless Chrome, and fails if a PDF doesn't have one page per .sheet.
+# Also crops the top of each PDF's first page into the social sharing image (og:image): img/og-fr.jpg, img/og-en.jpg.
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -46,7 +47,7 @@ chrome() { # headless Chrome with a fresh profile each run, so runs don't collid
   "$CHROME" --headless=new --disable-gpu --user-data-dir="$(mktemp -d -p "$WORK")" "$@" 2>/dev/null
 }
 
-print() { # <path> <output>
+print() { # <path> <output> <og image, without extension>
   fit=$(chrome --virtual-time-budget=10000 --dump-dom "http://localhost:$PORT/__fit.html?page=$1")
   sheets=$(echo "$fit" | sed -n 's/.*<title>sheets=\([0-9]*\) .*/\1/p')
   spare=$(echo "$fit" | sed -n 's/.*<title>sheets=[0-9]* spare=\(-\{0,1\}[0-9]*\)<\/title>.*/\1/p')
@@ -64,8 +65,10 @@ print() { # <path> <output>
     echo "✗ $2 has $pages pages, expected $sheets (one per .sheet)" >&2
     exit 1
   fi
+  # 1200px wide: A4 is 8.27in, so 145.1 dpi. 1200×630 is the size social networks expect.
+  pdftoppm -f 1 -l 1 -r 145.1 -x 0 -y 0 -W 1200 -H 630 -jpeg -jpegopt quality=85 -singlefile "$2" "$3"
   echo "✓ $2: $pages pages, ${spare}px left at the bottom of the fullest"
 }
 
-print / CV-Augustin-Riedinger-French.pdf
-print /en/ CV-Augustin-Riedinger-English.pdf
+print / CV-Augustin-Riedinger-French.pdf img/og-fr
+print /en/ CV-Augustin-Riedinger-English.pdf img/og-en

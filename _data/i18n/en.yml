@@ -4,6 +4,8 @@
 meta:
   title: Resume · Augustin Riedinger
   description: Resume of Augustin Riedinger, AI fullstack web engineer.
+  locale: en_US
+  image: /img/og-en.jpg
 
 toolbar:
   label: Language, zoom and download

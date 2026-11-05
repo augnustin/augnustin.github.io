@@ -22,7 +22,7 @@ js/zoom.js                  the toolbar's zoom − / + (the only script)
 index.html, en/index.html   front-matter stubs: `layout: resume` + `lang: fr|en` → / and /en/
 bin/print-pdf               regenerates the two PDFs (see PDFs)
 _config.yml                 site url, language switcher entries (code, label, path), excluded files
-img/                        portrait and favicon (see Portrait)
+img/                        portrait, favicon (see Portrait) and social sharing images (generated, see PDFs)
 CV-Augustin-Riedinger-*.pdf PDFs linked from the toolbar
 ```
 
@@ -127,4 +127,6 @@ gem install --user-install jekyll:'~>3.10' webrick   # once; GitHub Pages runs J
 `bin/print-pdf` (or the `/print-pdf` skill in `.claude/skills/print-pdf/`) builds the site into a temp folder (so
 it works while `jekyll serve` is running) and regenerates
 `CV-Augustin-Riedinger-French.pdf` and `CV-Augustin-Riedinger-English.pdf` with headless Chrome, failing if a PDF
-doesn't have one page per `.sheet` or if content overflows a sheet (it prints the space left on the fullest one). Run it after any content or style change so the downloads match the site.
+doesn't have one page per `.sheet` or if content overflows a sheet (it prints the space left on the fullest one).
+It also crops the top of each PDF's first page into `img/og-fr.jpg` / `img/og-en.jpg` (1200×630), the `og:image` set
+through `meta.image` in the i18n files; the shared title and description come from `meta.title` / `meta.description`. Run it after any content or style change so the downloads match the site.

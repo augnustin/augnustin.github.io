@@ -31,4 +31,4 @@ Render a quick preview to confirm it looks right (fonts loaded, nothing clipped 
 pdftoppm -r 70 -png -singlefile CV-Augustin-Riedinger-French.pdf <scratchpad>/pdf-fr
 ```
 
-Then tell the user both files were updated. Don't commit unless asked.
+It also regenerates the social sharing images `img/og-fr.jpg` and `img/og-en.jpg`. Then tell the user both PDFs were updated. Don't commit unless asked.

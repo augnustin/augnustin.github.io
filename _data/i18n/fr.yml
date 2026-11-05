@@ -4,6 +4,8 @@
 meta:
   title: CV · Augustin Riedinger
   description: CV d'Augustin Riedinger, ingénieur web fullstack IA.
+  locale: fr_FR
+  image: /img/og-fr.jpg
 
 toolbar:
   label: Langue, zoom et téléchargement
